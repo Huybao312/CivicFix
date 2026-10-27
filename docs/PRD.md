@@ -180,7 +180,7 @@ Khi thiếu vật tư, chờ nhà thầu hoặc không thể tiếp cận, kỹ 
 
 ### 6.6. Hoàn thành, xác nhận và mở lại
 
-Kỹ thuật viên đánh dấu **đề xuất hoàn thành** bằng mô tả việc đã làm và kết quả kiểm tra. Quản lý xem bằng chứng và chuyển sang `RESOLVED`. Người báo nhận thông tin kết quả. Trong cửa sổ phản hồi cấu hình, người báo có thể chọn “Vẫn còn lỗi” và mô tả thêm; quản lý xác minh, sau đó mở lại cùng phiếu nếu cùng nguyên nhân/chưa sửa triệt để. Nếu là hỏng hóc mới sau khi đã ổn định, tạo phiếu mới và liên kết “tái diễn”.
+Kỹ thuật viên đánh dấu **đề xuất hoàn thành** bằng mô tả việc đã làm và kết quả kiểm tra. Quản lý xem bằng chứng và chuyển sang `RESOLVED`. Hệ thống tạo thông báo hoặc việc cần liên hệ với người báo theo quy tắc tại mục 6.7. Trong cửa sổ phản hồi cấu hình, người báo có thể chọn “Vẫn còn lỗi” và mô tả thêm; quản lý xác minh, sau đó mở lại cùng phiếu nếu cùng nguyên nhân/chưa sửa triệt để. Nếu là hỏng hóc mới sau khi đã ổn định, tạo phiếu mới và liên kết “tái diễn”.
 
 Quản lý đóng phiếu khi đã kiểm tra kết quả. Nếu muốn đóng tự động sau cửa sổ phản hồi, phải được ban quản lý chấp thuận và hiển thị trước cho cư dân; bản đầu **không tự đóng**. Sau khi `CLOSED`, người báo vẫn có thể gửi phản hồi; quản lý quyết định mở lại hoặc tạo phiếu liên kết. “Mở lại” là một **sự kiện** đưa phiếu về `ASSIGNED` hoặc `IN_PROGRESS`, tăng `reopen_count`, không phải trạng thái đứng yên tên `REOPENED`.
 
@@ -190,6 +190,24 @@ Quản lý đóng phiếu khi đã kiểm tra kết quả. Nếu muốn đóng t
 - Người báo thấy kết quả bằng ngôn ngữ dễ hiểu, không chỉ thấy mã trạng thái.
 - Phản hồi chưa khắc phục không tự động tuyên bố lỗi của kỹ thuật viên; quản lý phải xác minh và ghi quyết định.
 - Lịch sử giữ mọi lần giải quyết, đóng và mở lại; không ghi đè `resolved_at` cũ mà mất dấu vết.
+
+### 6.7. Báo kết quả cho người đã báo sự cố
+
+Khi phiếu chuyển sang `RESOLVED`, hệ thống xử lý theo cách người báo có thể được liên hệ:
+
+1. **Người báo có tài khoản đã liên kết:** tạo thông báo trong ứng dụng, hiển thị kết quả sửa chữa và nút “Vẫn còn lỗi”. Thông báo được tạo không có nghĩa người đó đã đọc; `read_at` chỉ được ghi khi họ mở thông báo.
+2. **Người báo qua điện thoại/chat/trực tiếp và chưa có tài khoản liên kết:** tạo một việc **cần báo kết quả** cho quản lý. Nhân viên liên hệ qua kênh đã dùng hoặc kênh được người báo cung cấp, xác minh người nhận trước khi trao đổi chi tiết, rồi ghi thời điểm, kênh và kết quả liên hệ: đã xác nhận với người báo, đã thử nhưng chưa gặp, hoặc không có thông tin liên hệ. Không tự gửi nội dung sự cố tới số điện thoại/tài khoản chat chưa được xác minh.
+3. **Người báo trùng:** người theo dõi có tài khoản nhận thông báo công khai từ hồ sơ chính. Nếu có người báo ngoài ứng dụng, quản lý có việc liên hệ riêng khi có thông tin phù hợp. Không tiết lộ danh tính hoặc ảnh riêng của người báo khác.
+
+Quản lý có thể đóng phiếu sau khi xác nhận công việc; với phiếu nhập hộ, trước khi đóng phải ghi ít nhất một lần liên hệ hoặc lý do không thể liên hệ. Ghi “đã thử liên hệ” không được hiển thị thành “cư dân đã nhận thông báo”. Nếu người báo trả lời rằng lỗi vẫn còn qua điện thoại/chat, quản lý ghi phản hồi vào phiếu và quyết định mở lại theo mục 6.6. Bản portfolio mô phỏng thao tác liên hệ; nó không thực sự gọi điện hoặc gửi tin nhắn.
+
+**Tiêu chí chấp nhận R-07**
+
+- Chuyển sang `RESOLVED` tạo đúng một thông báo trong ứng dụng cho mỗi người báo/người theo dõi có tài khoản và một việc liên hệ cho mỗi người báo ngoài ứng dụng cần báo kết quả.
+- Người có tài khoản thấy nội dung kết quả và có thể phản hồi; trạng thái đã đọc chỉ đổi khi họ mở thông báo.
+- Phiếu nhập hộ không thể đóng khi việc liên hệ còn trống; nếu không có kênh liên hệ, quản lý phải ghi rõ lý do.
+- Nhật ký liên hệ ghi người thực hiện, kênh, thời điểm, kết quả và ghi chú tối thiểu; chỉ quản lý được xem thông tin liên hệ riêng.
+- Việc liên hệ thất bại hoặc chưa được xác nhận không được trình bày là người báo đã được thông báo.
 
 ## 7. Trạng thái và chuyển đổi
 
@@ -240,10 +258,12 @@ Các ngưỡng mục tiêu theo ưu tiên, giờ làm việc và loại sự c�
 ## 9. Thông báo và kỳ vọng phản hồi
 
 - Thông báo trong ứng dụng gửi cho người báo/người theo dõi khi: yêu cầu bổ sung, tiếp nhận, đổi trạng thái có ý nghĩa, kết quả, từ chối, gộp/tách gộp, mở lại.
+- Với người báo nhập hộ chưa có tài khoản liên kết, thông báo trong ứng dụng không đến được họ; hệ thống tạo việc để quản lý liên hệ và ghi kết quả theo mục 6.7.
 - Người phụ trách nhận thông báo khi được giao, bị thu hồi, có phản hồi chưa khắc phục hoặc có việc cần cập nhật.
 - Ban quản lý thấy hàng đợi chưa đọc, phiếu cần quyết định và phiếu quá mốc mục tiêu trên màn hình làm việc.
 - Nội dung cho cư dân dùng ngôn ngữ bình thường, ví dụ “Đã giao kỹ thuật kiểm tra” thay vì chỉ `ASSIGNED`.
 - Trong bản đầu, thông báo chỉ xuất hiện khi người dùng mở ứng dụng. Giao diện và hướng dẫn sử dụng phải nói rõ điều này; không hứa cảnh báo tức thời.
+- Phân biệt `đã tạo thông báo`, `đã đọc thông báo`, `đã thử liên hệ` và `người báo xác nhận đã nhận`; không dùng một cờ “đã thông báo” cho cả bốn trường hợp.
 - Thông báo được tạo sau khi thay đổi nghiệp vụ commit thành công. Nếu gửi qua kênh ngoài ở giai đoạn sau, dùng hàng đợi/outbox để tránh gửi trước khi transaction hoàn tất.
 
 ## 10. Quyền truy cập và dữ liệu riêng tư
@@ -308,13 +328,15 @@ Trước pilot cần chốt thời gian lưu ảnh, nội dung báo cáo, thông
 | `building_memberships` | User, building, role, hiệu lực; unique membership đang hoạt động phù hợp. |
 | `resident_apartment_links` | Liên kết người–căn hộ, trạng thái xác minh và thời hạn. |
 | `issues` | Mã, building, nguồn, người nhập, người báo nếu xác minh được, `received_at`, `created_at`, vị trí, mô tả, priority, status, version, người phụ trách hiện tại. |
-| `issue_reporters` | Người báo/người theo dõi đã xác minh, quyền xem và nguồn tham gia. |
+| `issue_reporters` | Người báo/người theo dõi, tài khoản liên kết nếu đã xác minh, nguồn tham gia và thông tin liên hệ tối thiểu được bảo vệ khi cần liên hệ thủ công. |
 | `issue_links` | Quan hệ duplicate/recurrent/related, người quyết định và lý do. |
 | `issue_events` | Nhật ký bất biến: loại sự kiện, actor, timestamp, dữ liệu trước/sau hoặc tham chiếu, ghi chú công khai/nội bộ. |
 | `assignments` | Người được giao, người giao, thời điểm bắt đầu/kết thúc, lý do thu hồi/chuyển. |
 | `work_updates` | Ghi chú công việc ngắn, kết quả, vật tư/phút nếu có, người tạo, thời điểm. |
 | `attachments` | Storage key, loại, kích thước, người tải, quyền hiển thị; không lưu ảnh trong DB. |
 | `notifications` | Người nhận, sự kiện nguồn, nội dung, `read_at`; chống tạo trùng theo sự kiện/người nhận. |
+| `contact_tasks` | Việc báo kết quả cho người ngoài ứng dụng, người phụ trách, trạng thái và lý do không thể liên hệ nếu có. |
+| `contact_attempts` | Phiếu, người báo ngoài ứng dụng, người liên hệ, kênh, thời điểm, kết quả và ghi chú tối thiểu; không đồng nhất lần thử với việc người báo đã nhận. |
 | `service_targets` | Cấu hình mục tiêu theo chung cư/ưu tiên/loại, hiệu lực theo thời gian; không sửa hồi tố âm thầm. |
 
 Mọi timestamp lưu theo UTC và hiển thị theo múi giờ của chung cư. `received_at` nhập hồi tố phải có `recorded_by` và `recorded_at` để phân biệt với sự kiện server ghi nhận. Các FK và ràng buộc uniqueness bảo vệ toàn vẹn cơ bản; role và state machine được kiểm tra trong nghiệp vụ backend. Migration dùng Flyway.
@@ -335,6 +357,7 @@ API REST dùng `/api/v1`; endpoint chính là command theo nghiệp vụ, không
 | Kết quả | `POST /issues/{id}/resolve`, `/close`, `/feedback`, `/reopen` | Phân biệt đề xuất, xác nhận, phản hồi và quyết định mở lại. |
 | Tệp | `POST /issues/{id}/attachments`, `GET /attachments/{id}/download` | Kiểm tra quyền mỗi lần; URL ngắn hạn. |
 | Thông báo | `GET /notifications`, `PATCH /notifications/{id}/read` | Chỉ chủ thông báo. |
+| Liên hệ người báo | `GET /issues/{id}/contact-tasks`, `POST /issues/{id}/contact-attempts` | Chỉ quản lý; ghi kết quả liên hệ cho phiếu nhập hộ, không tự gửi tin nhắn. |
 | Cấu hình | `/admin/memberships`, `/admin/categories`, `/admin/emergency-contacts`, `/admin/service-targets` | Chỉ role được cấp; audit thay đổi. |
 
 Response lỗi thống nhất với `code`, `message`, `details`, `requestId`. `409` trả trạng thái/version hiện tại khi có xung đột. `404` hoặc `403` theo chính sách chống lộ đối tượng. API docs phải chỉ rõ ai có quyền gọi, trạng thái trước/sau, tác dụng phụ và lỗi có thể gặp.
@@ -387,9 +410,10 @@ Không dùng “số phiếu được tạo” hay “tỷ lệ hoàn thành đ�
 5. Phân công, đổi người, thu hồi; kỹ thuật viên cũ mất quyền cập nhật.
 6. Tạm hoãn và tiếp tục giữ đúng trạng thái trước đó, lý do và mốc thời gian.
 7. Đề xuất hoàn thành → quản lý xác nhận → cư dân báo vẫn lỗi → quản lý mở lại; lịch sử và mốc SLA không bị ghi đè.
-8. Hai quản lý cập nhật cùng phiếu; một thao tác nhận xung đột rõ ràng, không mất dữ liệu.
-9. Người ngoài phạm vi đổi ID phiếu/ảnh/thông báo không đọc được dữ liệu.
-10. Upload lỗi giữa storage và DB không để lại ảnh công khai hoặc metadata sai; có dọn dẹp file mồ côi.
+8. Phiếu có người báo qua web tạo thông báo kết quả; chỉ khi người đó mở mới có `read_at`. Phiếu nhập hộ tạo việc liên hệ, ghi lần gọi thử/đã xác nhận; không đóng khi chưa ghi kết quả hoặc lý do không thể liên hệ.
+9. Hai quản lý cập nhật cùng phiếu; một thao tác nhận xung đột rõ ràng, không mất dữ liệu.
+10. Người ngoài phạm vi đổi ID phiếu/ảnh/thông báo không đọc được dữ liệu.
+11. Upload lỗi giữa storage và DB không để lại ảnh công khai hoặc metadata sai; có dọn dẹp file mồ côi.
 
 ### 16.2. Định nghĩa hoàn thành cho mốc B
 

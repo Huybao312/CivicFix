@@ -22,6 +22,7 @@ Khi tìm tài liệu công khai, lưu URL, ngày truy cập, ai công bố và c
 | A4 | Kỹ thuật viên có thể ghi cập nhật ngắn trên điện thoại tại hiện trường | Chưa xác minh | Nhật ký bị bỏ trống hoặc điền sau, mốc thời gian thiếu tin cậy | Thử tác vụ trên thiết bị và điều kiện kết nối họ thực sự dùng |
 | A5 | Quản lý có thể quyết định lúc nào hai báo cáo thuộc cùng một sự cố | Suy luận | Gộp sai làm mất một công việc cần sửa riêng | Cho người tiếp nhận phân loại các cặp báo cáo thật/giả và giải thích quyết định |
 | A6 | Người báo muốn phản hồi khi hệ thống ghi “đã khắc phục” | Chưa xác minh | Chức năng phản hồi có thể ít dùng hoặc gây vòng xử lý dài | Quan sát ca sửa chưa triệt để; thử giao diện phản hồi với cư dân |
+| A7 | Nhân viên quản lý có thể liên hệ lại với người báo qua kênh ngoài và ghi kết quả liên hệ | Chưa xác minh | Phiếu nhập hộ có thể được đóng mà người báo không hề biết kết quả | Xác nhận trách nhiệm và kênh liên hệ trong một quy trình vận hành thật |
 
 ## Nhật ký nguồn công khai
 
@@ -39,7 +40,7 @@ Hai tài khoản demo gửi báo cáo tại cùng vị trí. Quản lý xem ản
 
 ### S2 — Quản lý nhập hộ cuộc gọi báo rò nước
 
-Một người gọi điện nhưng chưa có tài khoản. Quản lý tạo phiếu với nguồn `PHONE`, thời điểm nhận cuộc gọi và thời điểm nhập hệ thống riêng. Cần kiểm tra ai được xem phiếu và cách không tạo danh tính giả cho người gọi.
+Một người gọi điện nhưng chưa có tài khoản. Quản lý tạo phiếu với nguồn `PHONE`, thời điểm nhận cuộc gọi và thời điểm nhập hệ thống riêng. Khi phiếu được giải quyết, hệ thống tạo việc gọi lại; quản lý ghi đã liên hệ, đã thử nhưng chưa gặp, hoặc không có cách liên hệ. Cần kiểm tra ai được xem phiếu và cách không tạo danh tính giả cho người gọi.
 
 ### S3 — Báo đã sửa nhưng lỗi vẫn còn
 

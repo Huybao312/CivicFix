@@ -123,15 +123,15 @@ Tổng công sức tham khảo sau M0 là **148–240 giờ**, cộng khoảng *
 
 **Thứ tự ưu tiên:**
 
-1. [ ] Quản lý nhập hộ báo cáo từ điện thoại/chat/trực tiếp; lưu `source`, `received_at`, `created_at` riêng.
+1. [ ] Quản lý nhập hộ báo cáo từ điện thoại/chat/trực tiếp; lưu `source`, `received_at`, `created_at` riêng và cách liên hệ người báo nếu có.
 2. [ ] Quản lý yêu cầu bổ sung thông tin và cư dân trả lời; từ chối có lý do.
 3. [ ] Gợi ý và gộp báo trùng thủ công; người báo phiếu phụ chỉ thấy tiến độ công khai.
 4. [ ] Tạm hoãn với lý do và thời điểm cập nhật tiếp; tiếp tục đúng trạng thái.
 5. [ ] Cư dân phản hồi vẫn còn lỗi; quản lý mở lại hoặc tạo phiếu liên kết.
 6. [ ] Ảnh trước/sau xử lý bằng lưu trữ riêng tư; giới hạn loại và kích thước.
-7. [ ] Thông báo trong ứng dụng cho các thay đổi quan trọng; nói rõ người dùng phải mở app để đọc.
+7. [ ] Thông báo trong ứng dụng cho người có tài khoản khi có kết quả; với phiếu nhập hộ chưa liên kết tài khoản, tạo việc liên hệ và ghi lần liên hệ thủ công. Phân biệt đã tạo thông báo, đã đọc và đã xác nhận nhận tin.
 
-**Điều kiện hoàn thành:** Mỗi nhánh có kịch bản demo và ít nhất một test cho rủi ro thật: quyền xem dữ liệu gộp, từ chối thiếu lý do, mở lại không mất lịch sử, lỗi upload không làm lộ ảnh.
+**Điều kiện hoàn thành:** Mỗi nhánh có kịch bản demo và ít nhất một test cho rủi ro thật: quyền xem dữ liệu gộp, từ chối thiếu lý do, mở lại không mất lịch sử, phiếu nhập hộ không bị ghi là “đã báo cho cư dân” khi chưa liên hệ, lỗi upload không làm lộ ảnh.
 
 **Thứ tự có thể thay đổi:** M1 chỉ giúp xác định giả định rủi ro, chưa chứng minh tần suất báo trùng hay nhập hộ. Ưu tiên các ca cần để demo luồng đầu cuối; các chức năng chưa phục vụ kịch bản có thể chuyển sau portfolio.
 

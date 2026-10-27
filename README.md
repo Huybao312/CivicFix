@@ -15,6 +15,7 @@ Báo cáo sự cố thường đến qua nhiều kênh như điện thoại, nh�
 - Ban quản lý nhập báo cáo nhận từ điện thoại, chat hoặc trực tiếp; yêu cầu bổ sung thông tin, xử lý báo trùng và phân công.
 - Kỹ thuật viên xem việc được giao, cập nhật công việc và đề xuất hoàn thành.
 - Ban quản lý xác nhận kết quả; cư dân phản hồi nếu sự cố vẫn chưa được khắc phục.
+- Người có tài khoản nhận thông báo kết quả trong ứng dụng; với báo cáo nhập hộ, ban quản lý có việc liên hệ và ghi nhận đã báo lại qua kênh phù hợp.
 - Lịch sử xử lý và quyền truy cập được kiểm soát theo vai trò trong chung cư.
 
 CivicFix không thay thế kênh liên hệ khẩn cấp của chung cư.
