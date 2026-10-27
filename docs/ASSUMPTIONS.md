@@ -29,7 +29,11 @@ Khi tìm tài liệu công khai, lưu URL, ngày truy cập, ai công bố và c
 
 | Nguồn/URL | Ai công bố, bối cảnh | Thông tin dùng được | Điều không thể suy ra |
 |---|---|---|---|
-| Chưa thêm | — | — | — |
+| [Croydon Council — Reporting communal repairs](https://www.croydon.gov.uk/housing/information-council-tenants/housing-maintenance-and-safety/repairs-council-homes-0/reporting-communal-repairs) (truy cập 27/10/2026) | Hội đồng Croydon, quy trình sửa khu vực chung trong nhà ở do hội đồng quản lý tại Anh | Có báo online/điện thoại; người báo cần nêu vị trí và mô tả; nhân viên có thể liên hệ hỏi thêm hoặc báo đã hoàn thành | Không chứng minh cư dân tại chung cư của CivicFix dùng các kênh đó, không chứng minh cần hiển thị số căn hộ cho kỹ thuật viên, không xác nhận thời hạn liên hệ. |
+| [Camden Council — Report a housing repair](https://www.camden.gov.uk/report-a-housing-repair) (truy cập 27/10/2026) | Hội đồng Camden, quy trình sửa nhà ở công và khu vực chung tại Anh | Trước khi báo sự cố khu vực chung nên kiểm tra đã có báo cáo; có cập nhật qua kênh ngoài, theo dõi trạng thái và hướng dẫn riêng cho ca khẩn cấp | Không chứng minh gộp phiếu tự động là đúng, không cho phép sao chép các mức thời gian xử lý của Camden thành SLA CivicFix. |
+| [NYCHA — Repairs Process](https://www.nyc.gov/site/nycha/residents/in-unit-repair-process.page) (truy cập 27/10/2026) | Cơ quan nhà ở công New York, quy trình sửa trong căn hộ và toàn tòa nhà | Khu vực chung có thể báo qua trung tâm điện thoại hoặc web/app; phiếu do nhân viên tạo hộ có thể hiển thị trong tài khoản khi đã liên kết; có bước đánh giá và giao công việc | Đây là nhà ở công tại Mỹ, không phải chung cư tư nhân tại Việt Nam; không xác nhận mô hình phân quyền, cơ cấu nhân sự hoặc trách nhiệm pháp lý cho CivicFix. |
+
+Ba nguồn trên chỉ cho thấy **mẫu quy trình tồn tại ở tổ chức khác**. Các giả định A1–A8 vẫn là suy luận hoặc chưa xác minh với bối cảnh dự án; không nâng chúng thành “đã được người dùng xác nhận”. Quy tắc quyền và trạng thái dùng cho bản demo được chốt trong [ma trận quyền](ACCESS_CONTROL.md) và [tiêu chí chấp nhận](ACCEPTANCE_CRITERIA.md).
 
 ## Ba kịch bản bắt đầu
 

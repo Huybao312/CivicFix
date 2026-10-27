@@ -84,6 +84,8 @@ Một người có thể có nhiều vai trò trong cùng chung cư, nhưng quy�
 
 [Roadmap](ROADMAP.md) chia công việc theo **luồng chức năng hoàn chỉnh**. Mỗi issue chức năng bao gồm giao diện, API, dữ liệu, phân quyền, xử lý lỗi, kiểm thử liên quan và tài liệu. Không có mốc riêng để bắt đầu bảo mật hoặc kiểm thử sau khi các chức năng đã viết xong.
 
+Quy tắc triển khai cụ thể cho bản demo được chốt trong [sơ đồ luồng](FLOWS.md), [ma trận quyền](ACCESS_CONTROL.md) và [state machine/tiêu chí chấp nhận](ACCEPTANCE_CRITERIA.md). Khi phần mô tả tổng quát trong PRD còn mở, ba tài liệu này là quyết định chi tiết để viết issue và test; thay đổi chúng phải cập nhật lại các tiêu chí liên quan.
+
 ### 5.1. Demo đầu cuối
 
 Sau khi có kịch bản giả lập, hệ thống cần chạy được: đăng nhập và nhận diện căn hộ → cư dân tạo/xem phiếu khu vực chung → quản lý tiếp nhận/phân công → kỹ thuật viên cập nhật → quản lý xác nhận → cư dân xem kết quả và phản hồi. Mỗi bước phải hoạt động từ web đến database, chặn truy cập trái quyền và có test cho quy tắc nghiệp vụ quan trọng trước khi bước đó được coi là hoàn thành.

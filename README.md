@@ -26,13 +26,15 @@ CivicFix không thay thế kênh liên hệ khẩn cấp của chung cư.
 - [Product Requirements Document](docs/PRD.md): mục tiêu, người dùng, luồng nghiệp vụ, quyền truy cập, tiêu chí chấp nhận và các giả định cần xác minh.
 - [Roadmap và milestone](docs/ROADMAP.md): thứ tự thực hiện, đầu ra của từng mốc, điều kiện hoàn thành và việc nên làm ngay.
 - [Sơ đồ luồng nghiệp vụ](docs/FLOWS.md): đường đi của báo cáo qua web và nhập hộ, phân loại, xử lý, báo kết quả, đóng và mở lại phiếu.
+- [Ma trận quyền](docs/ACCESS_CONTROL.md): ai được thao tác và đọc từng loại dữ liệu, ảnh, lịch sử và thông báo.
+- [State machine và tiêu chí chấp nhận](docs/ACCEPTANCE_CRITERIA.md): điều kiện chuyển trạng thái và các ca để viết test.
 - [Sổ giả định và kịch bản mô phỏng](docs/ASSUMPTIONS.md): phân biệt căn cứ công khai, suy luận và các điều chưa thể xác minh.
 
 ## Bước tiếp theo
 
-1. Tổng hợp thông tin công khai về quy trình báo và xử lý sự cố; dựng các tình huống mô phỏng có nguồn và giả định rõ ràng.
-2. Ghi lại những điều được tài liệu hỗ trợ và những giả định chưa thể xác minh.
-3. Thiết kế luồng cốt lõi trên web responsive, sau đó mới triển khai từng mốc.
+1. Bắt đầu [M2](docs/ROADMAP.md): dựng bộ khung web, API, database và CI; seed tài khoản giả.
+2. Làm đăng nhập, liên kết cư dân–căn hộ và kiểm tra quyền ở backend theo [ma trận quyền](docs/ACCESS_CONTROL.md).
+3. Viết test cho một đường thành công và các ca vượt quyền trước khi đóng từng issue chức năng.
 
 Đây là dự án cá nhân phục vụ học tập và portfolio. Những chính sách vận hành trong PRD chưa được một chung cư cụ thể xác nhận.
 

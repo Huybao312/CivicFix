@@ -43,11 +43,11 @@ Tổng từ M1 đến M9 khoảng **181–302 giờ**, chưa kể dự phòng ch
 
 **Các issue cần giải quyết:**
 
-- [ ] Ghi 2–3 nguồn công khai có bối cảnh rõ; cập nhật [sổ giả định](ASSUMPTIONS.md). Nguồn từ nơi khác không chứng minh quy trình ở một chung cư cụ thể.
-- [ ] Dựng ba ca: đèn hành lang được báo trùng; quản lý nhập hộ cuộc gọi rò nước khu vực chung; đã báo sửa nhưng lỗi còn.
+- [x] Ghi ba nguồn công khai có bối cảnh rõ; cập nhật [sổ giả định](ASSUMPTIONS.md). Nguồn từ nơi khác không chứng minh quy trình ở một chung cư cụ thể.
+- [x] Dựng [ba ca mô phỏng](ASSUMPTIONS.md): đèn hành lang được báo trùng; quản lý nhập hộ cuộc gọi rò nước khu vực chung; đã báo sửa nhưng lỗi còn.
 - [x] Vẽ [sơ đồ hành động và người chịu trách nhiệm](FLOWS.md) từ gửi báo cáo đến đóng/mở lại.
-- [ ] Chốt ma trận quyền: ai thấy tên/căn hộ người báo, ai sửa phiếu, ai chuyển trạng thái, ai xem lịch sử và ảnh.
-- [ ] Chốt state machine tối thiểu và tiêu chí chấp nhận cho từng luồng; ghi riêng điều chưa được người dùng thật xác minh.
+- [x] Chốt [ma trận quyền](ACCESS_CONTROL.md): ai thấy tên/căn hộ người báo, ai sửa phiếu, ai chuyển trạng thái, ai xem lịch sử và ảnh.
+- [x] Chốt [state machine và tiêu chí chấp nhận](ACCEPTANCE_CRITERIA.md) cho từng luồng; ghi riêng điều chưa được người dùng thật xác minh.
 
 **Xong khi:** Kịch bản, ma trận quyền và tiêu chí chấp nhận đủ cụ thể để viết test ở các milestone sau. Không cần phỏng vấn cư dân để hoàn thành portfolio.
 
@@ -147,10 +147,9 @@ Tổng từ M1 đến M9 khoảng **181–302 giờ**, chưa kể dự phòng ch
 
 ## 12. Việc làm ngay
 
-1. Mở [issue M1](https://github.com/Huybao312/CivicFix/issues/1) và [sổ giả định](ASSUMPTIONS.md); chọn ba giả định rủi ro nhất.
-2. Viết ba kịch bản mẫu và ma trận quyền. Kết quả này quyết định test nào phải có trong từng issue sau.
-3. Sau M1, làm M2 theo lát cắt đăng nhập + căn hộ + quyền; không cần đợi mọi wireframe hoàn hảo.
-4. Mỗi lần xong một issue, chạy demo chức năng đó và test hồi quy trước khi chọn issue kế tiếp.
+1. Bắt đầu M2 bằng lát cắt đăng nhập + căn hộ + quyền, dựa trên [ma trận quyền](ACCESS_CONTROL.md) và các ca AC-01–AC-26 trong [tiêu chí chấp nhận](ACCEPTANCE_CRITERIA.md).
+2. Trong M2, seed tài khoản giả cho ba vai trò nghiệp vụ và một quản trị viên riêng; kiểm tra quyền từ backend trước khi xây màn hình quản lý phiếu.
+3. Mỗi lần xong một issue, chạy demo chức năng đó và test hồi quy trước khi chọn issue kế tiếp.
 
 ## Tham khảo phương pháp
 
