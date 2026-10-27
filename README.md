@@ -25,6 +25,7 @@ CivicFix không thay thế kênh liên hệ khẩn cấp của chung cư.
 
 - [Product Requirements Document](docs/PRD.md): mục tiêu, người dùng, luồng nghiệp vụ, quyền truy cập, tiêu chí chấp nhận và các giả định cần xác minh.
 - [Roadmap và milestone](docs/ROADMAP.md): thứ tự thực hiện, đầu ra của từng mốc, điều kiện hoàn thành và việc nên làm ngay.
+- [Sơ đồ luồng nghiệp vụ](docs/FLOWS.md): đường đi của báo cáo qua web và nhập hộ, phân loại, xử lý, báo kết quả, đóng và mở lại phiếu.
 - [Sổ giả định và kịch bản mô phỏng](docs/ASSUMPTIONS.md): phân biệt căn cứ công khai, suy luận và các điều chưa thể xác minh.
 
 ## Bước tiếp theo

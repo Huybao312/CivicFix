@@ -45,7 +45,7 @@ Tổng từ M1 đến M9 khoảng **181–302 giờ**, chưa kể dự phòng ch
 
 - [ ] Ghi 2–3 nguồn công khai có bối cảnh rõ; cập nhật [sổ giả định](ASSUMPTIONS.md). Nguồn từ nơi khác không chứng minh quy trình ở một chung cư cụ thể.
 - [ ] Dựng ba ca: đèn hành lang được báo trùng; quản lý nhập hộ cuộc gọi rò nước khu vực chung; đã báo sửa nhưng lỗi còn.
-- [ ] Vẽ sơ đồ hành động và người chịu trách nhiệm từ gửi báo cáo đến đóng/mở lại.
+- [x] Vẽ [sơ đồ hành động và người chịu trách nhiệm](FLOWS.md) từ gửi báo cáo đến đóng/mở lại.
 - [ ] Chốt ma trận quyền: ai thấy tên/căn hộ người báo, ai sửa phiếu, ai chuyển trạng thái, ai xem lịch sử và ảnh.
 - [ ] Chốt state machine tối thiểu và tiêu chí chấp nhận cho từng luồng; ghi riêng điều chưa được người dùng thật xác minh.
 
