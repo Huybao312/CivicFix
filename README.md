@@ -34,3 +34,5 @@ CivicFix không thay thế kênh liên hệ khẩn cấp của chung cư.
 3. Thiết kế luồng cốt lõi trên web responsive, sau đó mới triển khai từng mốc.
 
 Đây là dự án cá nhân phục vụ học tập và portfolio. Những chính sách vận hành trong PRD chưa được một chung cư cụ thể xác nhận.
+
+Các [milestone trên GitHub](https://github.com/Huybao312/CivicFix/milestones) được chia theo luồng chức năng. Mỗi issue chức năng chỉ hoàn thành khi giao diện, API, dữ liệu, phân quyền và kiểm thử liên quan cùng chạy được.

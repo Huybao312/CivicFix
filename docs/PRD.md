@@ -80,38 +80,21 @@ Nếu giả thuyết 1 không đúng, CivicFix cần tích hợp với kênh đa
 
 Một người có thể có nhiều vai trò trong cùng chung cư, nhưng quyền được cấp rõ trong `building_memberships`. Không suy ra vai trò quản lý từ việc người đó sở hữu căn hộ. Trong bản đầu chỉ cấu hình một chung cư; mô hình quyền vẫn ghi rõ quan hệ với chung cư để tránh phải sửa logic bảo mật khi mở rộng.
 
-## 5. Phạm vi phát hành theo mốc
+## 5. Phạm vi phát hành và cách triển khai
 
-### Mốc A — Phân tích quy trình và dựng tình huống mô phỏng
+[Roadmap](ROADMAP.md) chia công việc theo **luồng chức năng hoàn chỉnh**. Mỗi issue chức năng bao gồm giao diện, API, dữ liệu, phân quyền, xử lý lỗi, kiểm thử liên quan và tài liệu. Không có mốc riêng để bắt đầu bảo mật hoặc kiểm thử sau khi các chức năng đã viết xong.
 
-- Tìm tài liệu hoặc ví dụ công khai về kênh tiếp nhận, điều phối và cập nhật sự cố; lưu đường dẫn, phạm vi áp dụng và độ tin cậy của từng nguồn.
-- Dựng các tình huống giả lập từ PRD: báo đèn hỏng trùng nhau, rò nước được báo qua điện thoại, sự cố thang máy ngoài giờ, sửa xong nhưng cư dân báo vẫn lỗi.
-- Vẽ **quy trình giả định** từ lúc phát hiện đến khi đóng phiếu; đánh dấu bước nào chưa có bằng chứng về cách vận hành thực tế.
-- Viết bảng `giả định | căn cứ | mức chắc chắn | tác động nếu sai | cách xác minh sau này`.
-- Chọn từ ngữ giao diện dễ hiểu, nhưng ghi rõ chưa có người dùng thật xác nhận cách hiểu các trạng thái.
-- **Điều kiện qua mốc:** Có sơ đồ quy trình giả định, ít nhất ba kịch bản và danh sách các giả định quan trọng. Không cần phỏng vấn cư dân hay ban quản lý để hoàn thành bản portfolio.
+### 5.1. Demo đầu cuối
 
-### Mốc B — Luồng cốt lõi có thể sử dụng
+Sau khi có kịch bản giả lập, hệ thống cần chạy được: đăng nhập và nhận diện căn hộ → cư dân tạo/xem phiếu khu vực chung → quản lý tiếp nhận/phân công → kỹ thuật viên cập nhật → quản lý xác nhận → cư dân xem kết quả và phản hồi. Mỗi bước phải hoạt động từ web đến database, chặn truy cập trái quyền và có test cho quy tắc nghiệp vụ quan trọng trước khi bước đó được coi là hoàn thành.
 
-- Tài khoản được mời/khởi tạo bởi quản trị viên; phân quyền theo chung cư.
-- Cư dân tạo phiếu nhanh; quản lý nhập hộ từ kênh ngoài.
-- Danh sách, chi tiết, phân công, cập nhật tiến độ, lịch sử, ảnh tùy chọn.
-- Yêu cầu bổ sung thông tin, gợi ý/gộp báo trùng, phản hồi chưa khắc phục.
-- Hướng dẫn sự cố nguy hiểm và thông tin liên hệ trực tiếp.
-- Thông báo trong ứng dụng và chỉ báo rõ rằng người dùng phải mở ứng dụng để đọc.
-- **Điều kiện qua mốc:** Luồng đầu cuối chạy được với dữ liệu giả; các trường hợp quyền, trùng, thiếu thông tin, chuyển trạng thái cạnh tranh và lỗi upload được kiểm thử.
+### 5.2. Hoàn thiện nghiệp vụ cho portfolio
 
-### Mốc C — Pilot và đo lường
+Các luồng nhập hộ qua điện thoại/chat, liên hệ trả kết quả, gộp báo trùng, tạm hoãn, chuyển người phụ trách, hạn xử lý và báo cáo được thêm thành các lát cắt độc lập. Mỗi lát cắt cũng phải đáp ứng tiêu chí hoàn thành của riêng nó. Ảnh chỉ được thêm cùng một luồng đã xử lý quyền truy cập và lỗi lưu file.
 
-- Cấu hình mốc phản hồi/khắc phục theo loại và ưu tiên sau khi ban quản lý đồng ý.
-- Báo cáo cơ bản về đầu vào theo kênh, thời gian tiếp nhận, tồn đọng, yêu cầu bổ sung, mở lại và hỏi lại.
-- Cơ chế xuất dữ liệu và xử lý sai sót cho người vận hành.
-- Kiểm tra trải nghiệm trên điện thoại tại hiện trường; cải tiến theo dữ liệu thử nghiệm.
-- **Điều kiện qua mốc:** Dữ liệu đủ đầy để giải thích từng chỉ số; người vận hành xác nhận dashboard phản ánh công việc thực.
+### 5.3. Pilot và mở rộng có điều kiện
 
-### Mốc D — Mở rộng có điều kiện
-
-Chỉ cân nhắc email/SMS/push, tích hợp kênh chat, nhà thầu, quản lý vật tư có cấu trúc hoặc nhiều chung cư khi pilot chứng minh nhu cầu và có người vận hành lâu dài. Đây không phải danh sách công việc đã cam kết.
+Pilot thật chỉ được lập kế hoạch khi có đơn vị vận hành đồng ý tham gia, người chịu trách nhiệm tiếp nhận, kênh khẩn cấp và chính sách dữ liệu. Cấu hình SLA và dashboard trong bản portfolio là mô phỏng; không được trình bày như cam kết của một chung cư. Email/SMS/push, tích hợp chat, nhà thầu, thiết bị trong căn hộ riêng hoặc đa chung cư chỉ cân nhắc sau khi có bằng chứng nhu cầu và quy trình vận hành phù hợp.
 
 ## 6. Hành trình và quy tắc nghiệp vụ
 
