@@ -8,13 +8,14 @@ CivicFix là dự án web responsive hỗ trợ cư dân báo sự cố kỹ thu
 
 Báo cáo sự cố thường đến qua nhiều kênh như điện thoại, nhóm chat và trao đổi trực tiếp. Thông tin có thể bị phân tán, báo trùng hoặc thiếu người chịu trách nhiệm. CivicFix hướng đến một hồ sơ xử lý thống nhất, có lịch sử và tiến độ rõ ràng cho các bên liên quan.
 
-## Phạm vi ban đầu
+## Các chức năng dự kiến
 
 - Một chung cư, sự cố kỹ thuật ở khu vực chung.
 - Cư dân báo cáo và theo dõi qua web trên điện thoại hoặc máy tính.
-- Ban quản lý có thể nhập báo cáo nhận từ các kênh khác, xử lý báo trùng và phân công.
-- Kỹ thuật viên cập nhật công việc và đề xuất hoàn thành.
-- Cư dân có thể phản hồi nếu sự cố vẫn chưa được khắc phục.
+- Ban quản lý nhập báo cáo nhận từ điện thoại, chat hoặc trực tiếp; yêu cầu bổ sung thông tin, xử lý báo trùng và phân công.
+- Kỹ thuật viên xem việc được giao, cập nhật công việc và đề xuất hoàn thành.
+- Ban quản lý xác nhận kết quả; cư dân phản hồi nếu sự cố vẫn chưa được khắc phục.
+- Lịch sử xử lý và quyền truy cập được kiểm soát theo vai trò trong chung cư.
 
 CivicFix không thay thế kênh liên hệ khẩn cấp của chung cư.
 

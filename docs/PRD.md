@@ -1,32 +1,27 @@
 # PRD — CivicFix
 
-**Phiên bản:** 2.0 — bản đề xuất để kiểm chứng  
+**Phiên bản:** 1.0 — bản đề xuất để kiểm chứng
+
 **Ngày:** 27/10/2026  
 **Chủ sản phẩm:** Dự án cá nhân  
 **Trạng thái:** Chưa được xác nhận với một ban quản lý chung cư cụ thể  
-**Nguồn đầu vào:** `CivicFix_Project_Specification.md` phiên bản 1.0 và phản biện sản phẩm ngày 27/10/2026  
 **Phạm vi thử nghiệm:** Một chung cư, sự cố kỹ thuật ở khu vực chung
 
 > Tài liệu này chốt một thiết kế sản phẩm có thể triển khai và kiểm thử. Những quy trình phụ thuộc vào chung cư thực tế được ghi là **giả định cần xác minh**. Không công bố CivicFix là kênh tiếp nhận chính thức, trực 24/7 hoặc cam kết thời gian xử lý khi chưa có đơn vị vận hành nhận trách nhiệm.
 
-## 1. Tóm tắt quyết định sản phẩm
+## 1. Tổng quan sản phẩm
 
 CivicFix là sổ công việc chung cho việc tiếp nhận và xử lý sự cố kỹ thuật tại khu vực chung của một chung cư. Cư dân có thể báo qua web; nhân viên quản lý cũng có thể nhập hộ báo cáo nhận qua điện thoại, nhóm chat hoặc trực tiếp. Mỗi sự cố có một hồ sơ chính, người phụ trách, mốc thời gian, nhật ký xử lý và kết quả có thể đối chiếu.
 
 Giá trị cần chứng minh không phải là số phiếu được tạo, mà là: ít báo cáo bị bỏ sót hơn, ít lần cư dân phải hỏi lại, quản lý biết ai đang chịu trách nhiệm và thông tin xử lý đáng tin. Nếu ban quản lý không có người duy trì sổ công việc hoặc cư dân thấy việc báo qua CivicFix chậm hơn kênh hiện có, sản phẩm chưa giải quyết được bài toán.
 
-### 1.1. Những thay đổi quan trọng so với đặc tả 1.0
+### 1.1. CivicFix sẽ làm gì?
 
-| Vấn đề | Quyết định trong PRD này |
-|---|---|
-| Báo cáo đến từ nhiều kênh | Quản lý được tạo phiếu thay cho báo cáo qua điện thoại, chat, trực tiếp; lưu nguồn và thời điểm tiếp nhận thực tế. |
-| Cư dân báo trùng | Có gợi ý sự cố tương tự và thao tác gộp thủ công; người báo trùng theo dõi hồ sơ chính qua quyền truy cập giới hạn. |
-| Ca nguy hiểm | Giao diện hiển thị hướng dẫn gọi đầu mối khẩn cấp do chung cư cấu hình; form không hứa có người trực tức thời. |
-| Quy trình thiếu thông tin | Có yêu cầu bổ sung thông tin, thời hạn phản hồi và khả năng xử lý khi người báo không phản hồi. |
-| Đóng/mở lại mơ hồ | Người quản lý xác nhận đóng; người báo có thể phản hồi chưa khắc phục trong cửa sổ cấu hình; mở lại là sự kiện, không là trạng thái lâu dài. |
-| SLA dễ sai lệch | Tách thời gian tiếp nhận, phản hồi và khắc phục; giữ lịch sử thay đổi ưu tiên, tạm hoãn và mốc hạn. |
-| Nhân viên chưa gắn với chung cư | Quyền truy cập dựa trên quan hệ `building_memberships`, không suy ra từ căn hộ của nhân viên. |
-| Lịch 8 tuần | Thay bằng các mốc sản phẩm với điều kiện hoàn thành, không ấn định thời hạn. |
+- Cư dân gửi báo cáo sự cố kỹ thuật ở khu vực chung qua web và theo dõi tiến độ xử lý.
+- Ban quản lý ghi nhận cả báo cáo đến từ điện thoại, nhóm chat hoặc trực tiếp; tiếp nhận, yêu cầu bổ sung thông tin, gộp báo trùng và phân công công việc.
+- Kỹ thuật viên xem việc được giao, cập nhật quá trình sửa chữa và đề xuất hoàn thành.
+- Ban quản lý xác nhận kết quả; cư dân phản hồi nếu sự cố vẫn tồn tại. Mọi quyết định quan trọng được lưu trong lịch sử.
+- Hệ thống kiểm soát quyền xem theo chung cư và cung cấp số liệu vận hành sau khi dữ liệu đủ tin cậy.
 
 ## 2. Bài toán và bối cảnh
 
