@@ -12,6 +12,7 @@ Báo cáo sự cố thường đến qua nhiều kênh như điện thoại, nh�
 
 - Một chung cư, sự cố kỹ thuật ở khu vực chung.
 - Cư dân báo cáo và theo dõi qua web trên điện thoại hoặc máy tính.
+- Phiếu lưu người báo và căn hộ đã xác minh để ban quản lý đối chiếu; vị trí thiết bị hỏng được ghi riêng.
 - Ban quản lý nhập báo cáo nhận từ điện thoại, chat hoặc trực tiếp; yêu cầu bổ sung thông tin, xử lý báo trùng và phân công.
 - Kỹ thuật viên xem việc được giao, cập nhật công việc và đề xuất hoàn thành.
 - Ban quản lý xác nhận kết quả; cư dân phản hồi nếu sự cố vẫn chưa được khắc phục.

@@ -23,6 +23,7 @@ Khi tìm tài liệu công khai, lưu URL, ngày truy cập, ai công bố và c
 | A5 | Quản lý có thể quyết định lúc nào hai báo cáo thuộc cùng một sự cố | Suy luận | Gộp sai làm mất một công việc cần sửa riêng | Cho người tiếp nhận phân loại các cặp báo cáo thật/giả và giải thích quyết định |
 | A6 | Người báo muốn phản hồi khi hệ thống ghi “đã khắc phục” | Chưa xác minh | Chức năng phản hồi có thể ít dùng hoặc gây vòng xử lý dài | Quan sát ca sửa chưa triệt để; thử giao diện phản hồi với cư dân |
 | A7 | Nhân viên quản lý có thể liên hệ lại với người báo qua kênh ngoài và ghi kết quả liên hệ | Chưa xác minh | Phiếu nhập hộ có thể được đóng mà người báo không hề biết kết quả | Xác nhận trách nhiệm và kênh liên hệ trong một quy trình vận hành thật |
+| A8 | Ban quản lý cần thấy tên và căn hộ đã xác minh của người báo trên phiếu khu vực chung | Suy luận | Thu thập/hiển thị dữ liệu cá nhân không cần thiết hoặc thiếu dữ liệu để liên hệ | Xác nhận với người quản lý khi có pilot; kiểm tra vai trò nào thực sự cần xem |
 
 ## Nhật ký nguồn công khai
 
@@ -36,7 +37,7 @@ Các tình huống này dùng để thiết kế và kiểm thử luồng, khôn
 
 ### S1 — Hai người cùng báo đèn hành lang hỏng
 
-Hai tài khoản demo gửi báo cáo tại cùng vị trí. Quản lý xem ảnh/mô tả, quyết định gộp; cả hai người theo dõi được tiến độ công khai. Cần kiểm tra quyền riêng tư và thao tác tách gộp nếu quyết định sai.
+Hai tài khoản demo, một từ căn 03, gửi báo cáo đèn hỏng tại cùng vị trí hành lang. Quản lý xem tên và căn hộ đã xác minh của từng người báo, quyết định gộp; cả hai người theo dõi được tiến độ công khai nhưng không thấy danh tính/căn hộ của nhau. Cần kiểm tra quyền riêng tư và thao tác tách gộp nếu quyết định sai.
 
 ### S2 — Quản lý nhập hộ cuộc gọi báo rò nước
 

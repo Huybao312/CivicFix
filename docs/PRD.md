@@ -19,6 +19,7 @@ Giá trị cần chứng minh không phải là số phiếu được tạo, mà
 ### 1.1. CivicFix sẽ làm gì?
 
 - Cư dân gửi báo cáo sự cố kỹ thuật ở khu vực chung qua web và theo dõi tiến độ xử lý.
+- Ban quản lý thấy người báo và số căn hộ đã xác minh trên từng phiếu để đối chiếu hoặc liên hệ khi cần.
 - Ban quản lý ghi nhận cả báo cáo đến từ điện thoại, nhóm chat hoặc trực tiếp; tiếp nhận, yêu cầu bổ sung thông tin, gộp báo trùng và phân công công việc.
 - Kỹ thuật viên xem việc được giao, cập nhật quá trình sửa chữa và đề xuất hoàn thành.
 - Ban quản lý xác nhận kết quả; cư dân phản hồi nếu sự cố vẫn tồn tại. Mọi quyết định quan trọng được lưu trong lịch sử.
@@ -56,7 +57,7 @@ Nếu giả thuyết 1 không đúng, CivicFix cần tích hợp với kênh đa
 
 - Không thay thế tổng đài, lực lượng ứng cứu hoặc hệ thống cảnh báo khẩn cấp.
 - Không bảo đảm ban quản lý thực sự sửa chữa đúng hạn; phần mềm chỉ ghi nhận và hỗ trợ điều phối.
-- Không xử lý thiết bị trong căn hộ riêng, tranh chấp cư dân, phí dịch vụ, khách ra vào.
+- Không xử lý thiết bị trong căn hộ riêng, tranh chấp cư dân, phí dịch vụ, khách ra vào. Số căn hộ của người báo là thông tin nhận diện, không đồng nghĩa vị trí hỏng nằm trong căn hộ đó.
 - Không tự động phân loại bằng AI, dự đoán hỏng hóc, điều phối nhà thầu phức tạp hay vận hành nhiều chung cư.
 - Không dùng chỉ số SLA để đánh giá nhân viên nếu nguồn dữ liệu chưa được kiểm chứng.
 
@@ -117,7 +118,9 @@ Chỉ cân nhắc email/SMS/push, tích hợp kênh chat, nhà thầu, quản l�
 ### 6.1. Cư dân báo cáo qua web
 
 1. Cư dân chọn “Báo sự cố khu vực chung”. Trước form, hệ thống hiển thị hướng dẫn gọi trực tiếp nếu có nguy hiểm tức thời (ví dụ người mắc kẹt trong thang máy, rò điện, ngập nước gần thiết bị điện). Số liên hệ lấy từ cấu hình đã được ban quản lý xác nhận.
+   Giao diện giải thích phạm vi bằng ví dụ: đèn hành lang hoặc đường ống chung gần căn 03 thuộc phạm vi; ổ điện, vòi nước hoặc thiết bị riêng **bên trong căn 03** không thuộc phạm vi bản đầu. Người chọn sự cố trong căn hộ được hướng dẫn theo kênh hiện có của chung cư, không tạo phiếu kỹ thuật khu vực chung.
 2. Form ưu tiên vị trí và mô tả ngắn. Ảnh, danh mục và mức khẩn cấp gợi ý là tùy chọn hoặc có giá trị mặc định; không bắt cư dân tự chẩn đoán kỹ thuật.
+   Tài khoản cư dân đã có căn hộ được xác minh thì hệ thống tự gắn căn hộ vào thông tin **người báo**. Nếu người đó có nhiều căn hộ đã xác minh, họ chọn căn hộ liên quan từ danh sách được cấp quyền; không được nhập tùy ý căn hộ của người khác. Trường **vị trí sự cố** vẫn nhập riêng, ví dụ “hành lang trước căn 03”.
 3. Khi nhập vị trí/từ khóa, hệ thống có thể gợi ý các sự cố đang mở cùng khu vực. Cư dân được chọn “Tôi cũng gặp vấn đề này” để theo dõi; vẫn có thể gửi phiếu mới nếu không giống.
 4. Sau khi gửi, màn hình hiển thị mã phiếu, thời điểm nhận, trạng thái ban đầu và kỳ vọng rõ: chưa đồng nghĩa đã có người đọc hoặc đang sửa.
 5. Cư dân có thể bổ sung thông tin khi quản lý yêu cầu, xem tiến độ và phản hồi “vẫn còn lỗi” khi nhận kết quả.
@@ -127,12 +130,15 @@ Chỉ cân nhắc email/SMS/push, tích hợp kênh chat, nhà thầu, quản l�
 - Trên màn hình điện thoại, người dùng hoàn thành báo cáo hợp lệ chỉ với vị trí, mô tả và thao tác gửi; ảnh có thể bổ sung sau.
 - Mỗi lần bấm gửi có khóa chống tạo phiếu trùng do gửi lặp hoặc mạng chập chờn.
 - Sau khi gửi thành công, phiếu và sự kiện đầu tiên được ghi cùng transaction.
+- Phiếu lưu người báo và căn hộ đã xác minh tại thời điểm báo; ban quản lý thấy cả hai, còn người xem sự cố chung không thấy danh tính/số căn hộ người khác.
+- Nếu tài khoản chưa có căn hộ xác minh, phiếu vẫn được gửi nhưng hiển thị “căn hộ chưa xác minh” cho quản lý; không tự gán căn hộ từ văn bản vị trí sự cố.
+- Nếu người dùng chọn hư hỏng của thiết bị riêng trong căn hộ, form giải thích phạm vi và không tạo phiếu khu vực chung.
 - Giao diện phân biệt “đã ghi nhận” với “đã được nhân viên tiếp nhận”.
 - Người dùng không thể sửa vị trí, mô tả hoặc ảnh của người khác.
 
 ### 6.2. Quản lý nhập báo cáo từ kênh ngoài
 
-Quản lý tạo phiếu với `source = PHONE | CHAT | IN_PERSON | OTHER`, thời điểm thực sự nhận báo cáo, tóm tắt, vị trí và thông tin liên hệ tối thiểu nếu cần. Có thể liên kết tài khoản cư dân nếu xác minh được; nếu không, phiếu vẫn xử lý được mà không tạo tài khoản giả. Không nhập nguyên văn đoạn chat chứa dữ liệu không cần thiết.
+Quản lý tạo phiếu với `source = PHONE | CHAT | IN_PERSON | OTHER`, thời điểm thực sự nhận báo cáo, tóm tắt, vị trí và thông tin liên hệ tối thiểu nếu cần. Có thể liên kết tài khoản cư dân và căn hộ nếu xác minh được; nếu không, phiếu vẫn xử lý được mà không tạo tài khoản giả. Số căn hộ do người gọi tự nói được ghi là **chưa xác minh**, không hiển thị như một liên kết cư dân–căn hộ đã được chứng thực. Không nhập nguyên văn đoạn chat chứa dữ liệu không cần thiết.
 
 **Tiêu chí chấp nhận R-02**
 
@@ -140,6 +146,7 @@ Quản lý tạo phiếu với `source = PHONE | CHAT | IN_PERSON | OTHER`, th�
 - `received_at` là mốc nhận từ kênh ngoài; `created_at` là mốc nhập hệ thống. Cả hai không bị ghi đè âm thầm.
 - Nếu có người báo đã liên kết tài khoản, người đó thấy phiếu sau khi quyền được xác minh.
 - Nếu chưa liên kết, hệ thống không tự gửi thông tin cho một địa chỉ chưa xác thực.
+- Quản lý nhìn thấy tên/số căn hộ đã xác minh nếu có; nếu chỉ có thông tin người gọi cung cấp, giao diện ghi rõ “chưa xác minh”.
 
 ### 6.3. Tiếp nhận, thiếu thông tin và từ chối
 
@@ -274,6 +281,7 @@ Các ngưỡng mục tiêu theo ưu tiên, giờ làm việc và loại sự c�
 |---|---|---|---|---|
 | Tạo phiếu từ web | Có | Có, kể cả nhập hộ | Theo quyền được cấp | Có thể hỗ trợ |
 | Xem phiếu đầy đủ | Phiếu của mình | Phiếu thuộc chung cư được quản lý | Phiếu đang được giao | Theo quyền quản trị rõ ràng |
+| Xem tên và căn hộ người báo | Thông tin của chính mình | Có trong phiếu thuộc chung cư được quản lý | Không mặc định; chỉ khi cần cho nhiệm vụ được giao | Theo quyền quản trị rõ ràng |
 | Xem tiến độ hồ sơ chính do báo trùng | Bản công khai giới hạn | Đầy đủ | Nếu được giao | Theo quyền |
 | Gộp/tách gộp, ưu tiên, phân công | Không | Có | Không | Chỉ khi được cấp quyền quản lý |
 | Ghi công việc | Không | Ghi chú điều phối | Phiếu đang được giao | Không mặc định |
@@ -286,6 +294,8 @@ Quyền được kiểm tra tại từng endpoint và từng đối tượng. AP
 
 - `users` chứa danh tính tài khoản; `building_memberships(user_id, building_id, role, active, valid_from, valid_to)` xác định quyền tại chung cư.
 - Cư dân có liên kết căn hộ đã xác minh riêng; một căn hộ có thể có nhiều cư dân và một cư dân có thể chuyển đi. Không dùng `users.apartment_id` làm nguồn duy nhất cho quyền truy cập.
+- Khi tạo báo cáo, backend lấy liên kết căn hộ đã xác minh và đang có hiệu lực của người báo; lưu `apartment_id_at_report` cùng nhãn căn hộ tại thời điểm báo trong bản ghi người báo. Nếu người báo có nhiều căn hộ đã xác minh, chỉ cho chọn trong danh sách đó. Thay đổi căn hộ về sau không âm thầm đổi thông tin lịch sử của phiếu cũ.
+- `location_description` mô tả **nơi thiết bị hỏng**; `apartment_id_at_report` mô tả **căn hộ của người báo**. Hai trường có thể khác nhau và không được suy ra lẫn nhau.
 - Tài khoản được mời hoặc tạo bởi quản trị viên. Không tự đăng ký rồi tự chọn căn hộ/role. Khi rời chung cư hoặc nghỉ việc, membership bị vô hiệu hóa; lịch sử vẫn giữ actor cũ.
 - Nhân viên chỉ thấy phiếu thuộc chung cư mà membership còn hiệu lực. Bản đầu có một chung cư nhưng vẫn kiểm tra quan hệ này ở backend.
 - Không đưa tên, số căn hộ, email hoặc số điện thoại người báo vào thông báo công khai của sự cố trùng.
@@ -309,6 +319,7 @@ Trước pilot cần chốt thời gian lưu ảnh, nội dung báo cáo, thông
 
 - Hàng đợi mặc định ưu tiên phiếu chưa được xem, cờ nguy hiểm, phiếu thiếu chủ sở hữu và phiếu cần quyết định.
 - Tạo phiếu nhập hộ nhanh từ cuộc gọi/chat; `source` và `received_at` nổi bật.
+- Danh sách và trang chi tiết dành cho quản lý hiển thị “Người báo” và “Căn hộ khi báo”; thông tin chưa xác minh phải có nhãn rõ ràng, không hiển thị như dữ liệu đã xác thực.
 - Màn hình chi tiết cho thấy ai phụ trách, hành động kế tiếp, lần cập nhật cuối, các phiếu có thể trùng và lịch sử.
 - Mỗi hành động thay đổi nghiệp vụ cho biết hệ quả trước khi xác nhận, đặc biệt là gộp, từ chối và đóng.
 
@@ -324,11 +335,12 @@ Trước pilot cần chốt thời gian lưu ảnh, nội dung báo cáo, thông
 | Thực thể | Dữ liệu/quy tắc chính |
 |---|---|
 | `buildings` | Tên, địa chỉ, múi giờ, kênh liên hệ khẩn cấp và trạng thái pilot. |
+| `apartments` | Mã/số căn hộ, tầng và chung cư; duy nhất theo `(building_id, unit_number)`. |
 | `users` | Danh tính, thông tin đăng nhập, trạng thái; không chứa role toàn cục làm nguồn quyền duy nhất. |
 | `building_memberships` | User, building, role, hiệu lực; unique membership đang hoạt động phù hợp. |
-| `resident_apartment_links` | Liên kết người–căn hộ, trạng thái xác minh và thời hạn. |
+| `resident_apartment_links` | Liên kết người–căn hộ, trạng thái xác minh và thời hạn; chỉ liên kết hợp lệ được dùng để gắn căn hộ người báo. |
 | `issues` | Mã, building, nguồn, người nhập, người báo nếu xác minh được, `received_at`, `created_at`, vị trí, mô tả, priority, status, version, người phụ trách hiện tại. |
-| `issue_reporters` | Người báo/người theo dõi, tài khoản liên kết nếu đã xác minh, nguồn tham gia và thông tin liên hệ tối thiểu được bảo vệ khi cần liên hệ thủ công. |
+| `issue_reporters` | Người báo/người theo dõi, tài khoản liên kết nếu đã xác minh, `apartment_id_at_report` và nhãn căn hộ tại thời điểm báo khi có xác minh, nguồn tham gia và thông tin liên hệ tối thiểu được bảo vệ khi cần liên hệ thủ công. Căn hộ người gọi tự khai được đánh dấu riêng là chưa xác minh. |
 | `issue_links` | Quan hệ duplicate/recurrent/related, người quyết định và lý do. |
 | `issue_events` | Nhật ký bất biến: loại sự kiện, actor, timestamp, dữ liệu trước/sau hoặc tham chiếu, ghi chú công khai/nội bộ. |
 | `assignments` | Người được giao, người giao, thời điểm bắt đầu/kết thúc, lý do thu hồi/chuyển. |
@@ -347,7 +359,7 @@ API REST dùng `/api/v1`; endpoint chính là command theo nghiệp vụ, không
 
 | Nhóm | Endpoint dự kiến | Quy tắc chính |
 |---|---|---|
-| Phiếu | `POST /issues`, `GET /issues`, `GET /issues/{id}` | Danh sách được lọc theo quyền phía server; tạo phiếu có idempotency key. |
+| Phiếu | `POST /issues`, `GET /issues`, `GET /issues/{id}` | Danh sách được lọc theo quyền phía server; tạo phiếu có idempotency key. Response của quản lý có người báo/căn hộ, response của người theo dõi khác không chứa thông tin này. |
 | Nhập hộ | `POST /issues/intake` | Chỉ quản lý; nguồn và thời điểm nhận riêng. |
 | Bổ sung | `POST /issues/{id}/request-info`, `POST /issues/{id}/provide-info` | Chỉ đúng người/đúng trạng thái. |
 | Tiếp nhận | `POST /issues/{id}/accept`, `/reject`, `/restore` | Ghi lý do và lịch sử. |
@@ -405,15 +417,16 @@ Không dùng “số phiếu được tạo” hay “tỷ lệ hoàn thành đ�
 
 1. Cư dân gửi phiếu; bấm gửi lặp không tạo hai phiếu; lịch sử ban đầu đúng.
 2. Quản lý nhập hộ; `received_at` và `created_at` khác nhau được giữ đúng.
-3. Hai báo cáo trùng được gộp rồi tách; người theo dõi không thấy dữ liệu riêng.
-4. Thiếu thông tin → bổ sung → tiếp nhận; từ chối và khôi phục đều có lý do.
-5. Phân công, đổi người, thu hồi; kỹ thuật viên cũ mất quyền cập nhật.
-6. Tạm hoãn và tiếp tục giữ đúng trạng thái trước đó, lý do và mốc thời gian.
-7. Đề xuất hoàn thành → quản lý xác nhận → cư dân báo vẫn lỗi → quản lý mở lại; lịch sử và mốc SLA không bị ghi đè.
-8. Phiếu có người báo qua web tạo thông báo kết quả; chỉ khi người đó mở mới có `read_at`. Phiếu nhập hộ tạo việc liên hệ, ghi lần gọi thử/đã xác nhận; không đóng khi chưa ghi kết quả hoặc lý do không thể liên hệ.
-9. Hai quản lý cập nhật cùng phiếu; một thao tác nhận xung đột rõ ràng, không mất dữ liệu.
-10. Người ngoài phạm vi đổi ID phiếu/ảnh/thông báo không đọc được dữ liệu.
-11. Upload lỗi giữa storage và DB không để lại ảnh công khai hoặc metadata sai; có dọn dẹp file mồ côi.
+3. Cư dân căn 03 báo đèn hành lang: quản lý thấy tên và căn 03; vị trí hỏng là hành lang. Cư dân khác và người theo dõi phiếu gộp không thấy tên/số căn hộ; đổi căn hộ sau đó không sửa lịch sử phiếu.
+4. Hai báo cáo trùng được gộp rồi tách; người theo dõi không thấy dữ liệu riêng.
+5. Thiếu thông tin → bổ sung → tiếp nhận; từ chối và khôi phục đều có lý do.
+6. Phân công, đổi người, thu hồi; kỹ thuật viên cũ mất quyền cập nhật.
+7. Tạm hoãn và tiếp tục giữ đúng trạng thái trước đó, lý do và mốc thời gian.
+8. Đề xuất hoàn thành → quản lý xác nhận → cư dân báo vẫn lỗi → quản lý mở lại; lịch sử và mốc SLA không bị ghi đè.
+9. Phiếu có người báo qua web tạo thông báo kết quả; chỉ khi người đó mở mới có `read_at`. Phiếu nhập hộ tạo việc liên hệ, ghi lần gọi thử/đã xác nhận; không đóng khi chưa ghi kết quả hoặc lý do không thể liên hệ.
+10. Hai quản lý cập nhật cùng phiếu; một thao tác nhận xung đột rõ ràng, không mất dữ liệu.
+11. Người ngoài phạm vi đổi ID phiếu/ảnh/thông báo không đọc được dữ liệu.
+12. Upload lỗi giữa storage và DB không để lại ảnh công khai hoặc metadata sai; có dọn dẹp file mồ côi.
 
 ### 16.2. Định nghĩa hoàn thành cho mốc B
 

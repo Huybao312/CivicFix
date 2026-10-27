@@ -73,7 +73,7 @@ Tổng công sức tham khảo sau M0 là **148–240 giờ**, cộng khoảng *
 - [ ] Viết 5 user story cốt lõi: cư dân tạo/xem phiếu; quản lý tiếp nhận/giao; kỹ thuật viên cập nhật/đề xuất xong; quản lý xác nhận; cư dân xem kết quả.
 - [ ] Viết tiêu chí chấp nhận cho mỗi story theo mẫu `Given–When–Then`, gồm ít nhất một trường hợp lỗi/quyền.
 - [ ] Chốt trạng thái cần cho demo: `SUBMITTED`, `ACCEPTED`, `ASSIGNED`, `IN_PROGRESS`, `RESOLVED`, `CLOSED`. Ghi rõ ai được chuyển từng bước.
-- [ ] Vẽ wireframe thô cho form báo cáo, danh sách của quản lý, việc của kỹ thuật viên và trang chi tiết chung. Dùng giấy hoặc công cụ bất kỳ; chưa cần thiết kế đẹp.
+- [ ] Vẽ wireframe thô cho form báo cáo, danh sách của quản lý, việc của kỹ thuật viên và trang chi tiết chung. Form phải phân biệt khu vực chung với thiết bị trong căn hộ. Dùng giấy hoặc công cụ bất kỳ; chưa cần thiết kế đẹp.
 - [ ] Vẽ ERD tối thiểu: users, buildings/memberships, issues, assignments, issue_events. Những bảng khác thêm khi luồng cần.
 - [ ] Ghi danh sách **để sau demo đầu cuối**: gộp trùng, nhập hộ, `NEEDS_INFO`, `ON_HOLD`, ảnh, thông báo, SLA, dashboard.
 - [ ] Chọn kịch bản demo với dữ liệu giả và tên vai trò rõ ràng.
@@ -91,7 +91,7 @@ Tổng công sức tham khảo sau M0 là **148–240 giờ**, cộng khoảng *
 - [ ] Tạo `frontend/` với React + TypeScript và `backend/` với Spring Boot; dùng PostgreSQL cho dữ liệu.
 - [ ] Tạo `docker-compose.yml` cho DB local và Flyway migration đầu tiên.
 - [ ] Cấu hình biến môi trường mẫu (`.env.example`), không commit secret thật.
-- [ ] Tạo dữ liệu giả cho một chung cư, ba vai trò và vài tài khoản demo.
+- [ ] Tạo dữ liệu giả cho một chung cư, vài căn hộ (gồm căn 03), ba vai trò và các tài khoản cư dân gắn với căn hộ đã xác minh.
 - [ ] Làm login, lấy tài khoản hiện tại và kiểm tra quyền theo `building_memberships` ở backend.
 - [ ] Làm một endpoint đọc nhỏ và hiển thị dữ liệu thật trên frontend để kiểm chứng kết nối.
 - [ ] Viết README cách chạy local từ máy mới.
@@ -107,7 +107,8 @@ Tổng công sức tham khảo sau M0 là **148–240 giờ**, cộng khoảng *
 **Thứ tự triển khai — mỗi bước phải chạy từ UI tới DB:**
 
 1. [ ] Cư dân tạo phiếu với vị trí, mô tả; backend gắn người tạo, chung cư, `SUBMITTED` và sự kiện ban đầu.
-2. [ ] Cư dân xem danh sách và chi tiết phiếu của mình; cư dân khác không đọc được qua cách đổi ID.
+   Backend lấy căn hộ đã xác minh của người báo (nếu có) và lưu căn hộ tại thời điểm báo; không lấy số căn hộ từ vị trí sự cố.
+2. [ ] Cư dân xem danh sách và chi tiết phiếu của mình; quản lý thấy người báo/căn hộ đã xác minh; cư dân khác không đọc được qua cách đổi ID.
 3. [ ] Quản lý xem hàng đợi, tiếp nhận và phân công kỹ thuật viên; ghi sự kiện và người phụ trách.
 4. [ ] Kỹ thuật viên xem “Việc của tôi”, bắt đầu và ghi cập nhật ngắn; người không được giao không sửa được.
 5. [ ] Kỹ thuật viên đề xuất hoàn thành; quản lý xác nhận `RESOLVED` rồi đóng; cư dân xem kết quả và dòng thời gian.
@@ -142,6 +143,7 @@ Tổng công sức tham khảo sau M0 là **148–240 giờ**, cộng khoảng *
 **Việc làm:**
 
 - [ ] Kiểm thử phân quyền ở mức đối tượng cho phiếu, lịch sử, ảnh, thông báo và danh sách.
+- [ ] Kiểm thử tên/số căn hộ người báo chỉ xuất hiện trong response của vai trò được phép; đổi căn hộ của cư dân không đổi dữ liệu lịch sử của phiếu cũ.
 - [ ] Kiểm thử hai quản lý cập nhật cùng phiếu; trả `409` hoặc cơ chế xung đột rõ ràng, không ghi đè âm thầm.
 - [ ] Kiểm thử gửi form lặp do mạng yếu; không tạo hai phiếu ngoài ý muốn.
 - [ ] Kiểm thử transaction trạng thái + lịch sử + phân công; một phần thất bại thì không để dữ liệu nửa chừng.
