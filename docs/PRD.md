@@ -4,7 +4,8 @@
 
 **Ngày:** 27/10/2026  
 **Chủ sản phẩm:** Dự án cá nhân  
-**Trạng thái:** Chưa được xác nhận với một ban quản lý chung cư cụ thể  
+**Trạng thái:** Đặc tả cho dự án portfolio mô phỏng; chưa được xác nhận với cư dân hoặc ban quản lý chung cư cụ thể
+
 **Phạm vi thử nghiệm:** Một chung cư, sự cố kỹ thuật ở khu vực chung
 
 > Tài liệu này chốt một thiết kế sản phẩm có thể triển khai và kiểm thử. Những quy trình phụ thuộc vào chung cư thực tế được ghi là **giả định cần xác minh**. Không công bố CivicFix là kênh tiếp nhận chính thức, trực 24/7 hoặc cam kết thời gian xử lý khi chưa có đơn vị vận hành nhận trách nhiệm.
@@ -80,13 +81,14 @@ Một người có thể có nhiều vai trò trong cùng chung cư, nhưng quy�
 
 ## 5. Phạm vi phát hành theo mốc
 
-### Mốc A — Kiểm chứng quy trình, chưa cần xây toàn bộ hệ thống
+### Mốc A — Phân tích quy trình và dựng tình huống mô phỏng
 
-- Phỏng vấn cư dân, quản lý và kỹ thuật viên về **lần sự cố gần nhất**, cách báo, cách giao việc, nơi thông tin bị thất lạc.
-- Quan sát hoặc mô phỏng việc tiếp nhận từ web, điện thoại/chat và xử lý báo trùng.
-- Vẽ quy trình hiện tại; xác định ai sở hữu từng bước, ca ngoài giờ và kênh khẩn cấp.
-- Chốt từ vựng mà người dùng hiểu: “đã nhận”, “đang xử lý”, “chờ”, “đã sửa”, “đã đóng”.
-- **Điều kiện qua mốc:** Có bằng chứng về ít nhất một điểm nghẽn lặp lại và một đầu mối quản lý chấp nhận thử quy trình mới. Nếu chỉ làm portfolio, ghi rõ các phát hiện là giả lập hay phỏng vấn thật.
+- Tìm tài liệu hoặc ví dụ công khai về kênh tiếp nhận, điều phối và cập nhật sự cố; lưu đường dẫn, phạm vi áp dụng và độ tin cậy của từng nguồn.
+- Dựng các tình huống giả lập từ PRD: báo đèn hỏng trùng nhau, rò nước được báo qua điện thoại, sự cố thang máy ngoài giờ, sửa xong nhưng cư dân báo vẫn lỗi.
+- Vẽ **quy trình giả định** từ lúc phát hiện đến khi đóng phiếu; đánh dấu bước nào chưa có bằng chứng về cách vận hành thực tế.
+- Viết bảng `giả định | căn cứ | mức chắc chắn | tác động nếu sai | cách xác minh sau này`.
+- Chọn từ ngữ giao diện dễ hiểu, nhưng ghi rõ chưa có người dùng thật xác nhận cách hiểu các trạng thái.
+- **Điều kiện qua mốc:** Có sơ đồ quy trình giả định, ít nhất ba kịch bản và danh sách các giả định quan trọng. Không cần phỏng vấn cư dân hay ban quản lý để hoàn thành bản portfolio.
 
 ### Mốc B — Luồng cốt lõi có thể sử dụng
 
@@ -367,13 +369,12 @@ Response lỗi thống nhất với `code`, `message`, `details`, `requestId`. `
 
 Không dùng “số phiếu được tạo” hay “tỷ lệ hoàn thành đúng hạn” làm bằng chứng duy nhất về giá trị. Cần đối chiếu số liệu với thực tế vận hành và ghi các ca hệ thống không nắm được.
 
-### 15.2. Nghiên cứu người dùng
+### 15.2. Kiểm thử mô phỏng và nghiên cứu khi có cơ hội
 
-- Phỏng vấn cư dân và nhân viên bằng câu chuyện về lần sự cố cụ thể gần nhất, không chỉ hỏi họ có thích ý tưởng hay không.
-- Cho mỗi vai trò làm nhiệm vụ trên prototype/bản chạy; quan sát điểm dừng, thao tác ngoài app và cách họ hiểu trạng thái.
-- Với người quản lý, thử tình huống một cuộc gọi, hai báo cáo trùng, sự cố ngoài giờ và chờ nhà thầu.
-- Với kỹ thuật viên, thử cập nhật trên điện thoại tại nơi có kết nối yếu và khi tay đang bận.
-- Ghi lại phát hiện, quyết định thay đổi và điều chưa được xác minh. Mẫu nhỏ giúp phát hiện lỗi, không đủ để khẳng định toàn thị trường.
+- Với bản portfolio, dùng các kịch bản giả lập đã ghi nguồn và giả định để kiểm tra luồng cư dân, quản lý và kỹ thuật viên. Tự chạy cả ca bình thường lẫn ca báo trùng, ngoài giờ, chờ nhà thầu và mở lại.
+- Kiểm tra giao diện trên điện thoại, kết nối yếu và bằng bàn phím; ghi lỗi thao tác quan sát được. Kết quả này chứng minh ứng dụng hoạt động theo kịch bản, không chứng minh cư dân thực tế sẽ chọn dùng nó.
+- Nếu có người quen sẵn lòng thử giao diện, có thể nhờ họ làm tác vụ với dữ liệu giả. Phản hồi đó giúp phát hiện vấn đề dễ dùng, không đại diện cho nhu cầu của cư dân chung cư.
+- Khi có cơ hội tiếp cận cư dân hoặc nhân viên vận hành, hỏi về một sự cố cụ thể gần nhất và quan sát họ làm nhiệm vụ trên bản chạy. Cập nhật PRD và roadmap theo kết quả, không ghi ngược giả định thành phát hiện nghiên cứu.
 
 ## 16. Kiểm thử và tiêu chí chấp nhận tổng thể
 

@@ -2,7 +2,7 @@
 
 CivicFix là dự án web responsive hỗ trợ cư dân báo sự cố kỹ thuật tại khu vực chung của chung cư, đồng thời giúp ban quản lý tiếp nhận, phân công và theo dõi quá trình xử lý.
 
-**Trạng thái:** Giai đoạn tìm hiểu quy trình và xác thực nhu cầu. Repository hiện chứa tài liệu sản phẩm; ứng dụng chưa được triển khai.
+**Trạng thái:** Dự án portfolio đang ở giai đoạn phân tích quy trình và thiết kế kịch bản mô phỏng. Repository hiện chứa tài liệu sản phẩm; ứng dụng chưa được triển khai. Nhu cầu người dùng thực tế chưa được xác thực.
 
 ## Bài toán
 
@@ -23,11 +23,12 @@ CivicFix không thay thế kênh liên hệ khẩn cấp của chung cư.
 
 - [Product Requirements Document](docs/PRD.md): mục tiêu, người dùng, luồng nghiệp vụ, quyền truy cập, tiêu chí chấp nhận và các giả định cần xác minh.
 - [Roadmap và milestone](docs/ROADMAP.md): thứ tự thực hiện, đầu ra của từng mốc, điều kiện hoàn thành và việc nên làm ngay.
+- [Sổ giả định và kịch bản mô phỏng](docs/ASSUMPTIONS.md): phân biệt căn cứ công khai, suy luận và các điều chưa thể xác minh.
 
 ## Bước tiếp theo
 
-1. Tìm hiểu cách cư dân và ban quản lý đang tiếp nhận, giao và theo dõi sự cố.
-2. Ghi lại các giả định được xác nhận hoặc cần sửa trong PRD.
+1. Tổng hợp thông tin công khai về quy trình báo và xử lý sự cố; dựng các tình huống mô phỏng có nguồn và giả định rõ ràng.
+2. Ghi lại những điều được tài liệu hỗ trợ và những giả định chưa thể xác minh.
 3. Thiết kế luồng cốt lõi trên web responsive, sau đó mới triển khai từng mốc.
 
 Đây là dự án cá nhân phục vụ học tập và portfolio. Những chính sách vận hành trong PRD chưa được một chung cư cụ thể xác nhận.
