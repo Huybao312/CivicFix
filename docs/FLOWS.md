@@ -2,6 +2,26 @@
 
 **Phạm vi:** Bản web portfolio cho sự cố kỹ thuật ở khu vực chung của một chung cư. Các tình huống và thao tác liên hệ ngoài ứng dụng là mô phỏng. Sơ đồ này cụ thể hóa [PRD](PRD.md), không mô tả phần mềm đã triển khai.
 
+## 0. Quản trị viên mời và kích hoạt tài khoản cư dân
+
+```mermaid
+flowchart TD
+    A["Quản trị viên xác minh cư dân và căn hộ ngoài ứng dụng"] --> B["Tìm tài khoản hiện có; không tạo user trùng"]
+    B --> C["Nhập email, căn hộ, ngày hiệu lực và căn cứ xác minh"]
+    C --> D["Kiểm tra lại rồi gửi lời mời dùng một lần"]
+    D --> E{"Người nhận mở link còn hạn?"}
+    E -- Không --> F["Quản trị viên gửi lại hoặc thu hồi; link cũ mất hiệu lực"]
+    E -- Có --> G{"Thông tin chung cư/căn hộ đúng?"}
+    G -- Không --> H["Báo thông tin sai; chưa cấp quyền"]
+    G -- Có --> I["Cư dân tự đặt mật khẩu"]
+    I --> J["Server kích hoạt user và membership, ghi audit"]
+    J --> K["Đăng nhập; backend lấy quyền và căn hộ còn hiệu lực"]
+    K --> L{"Chuyển đi hoặc liên kết bị thu hồi?"}
+    L -- Có --> M["Kết thúc membership/liên kết, thu hồi phiên; giữ lịch sử phiếu"]
+```
+
+Quản trị viên là người gắn căn hộ đã xác minh; xác nhận email chỉ chứng minh quyền kiểm soát hộp thư. Cư dân không tự chọn căn hộ hay role. Chi tiết trạng thái, khôi phục mật khẩu và xử lý lỗi nằm trong [vòng đời tài khoản](ACCOUNT_LIFECYCLE.md).
+
 ## 1. Bản đồ trách nhiệm từ báo cáo đến đóng phiếu
 
 ```mermaid

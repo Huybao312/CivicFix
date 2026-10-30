@@ -24,16 +24,18 @@ CivicFix không thay thế kênh liên hệ khẩn cấp của chung cư.
 ## Tài liệu
 
 - [Product Requirements Document](docs/PRD.md): mục tiêu, người dùng, luồng nghiệp vụ, quyền truy cập, tiêu chí chấp nhận và các giả định cần xác minh.
+- [Vòng đời tài khoản cư dân](docs/ACCOUNT_LIFECYCLE.md): quản trị viên mời, cư dân kích hoạt, khôi phục mật khẩu và kết thúc quyền căn hộ.
 - [Roadmap và milestone](docs/ROADMAP.md): thứ tự thực hiện, đầu ra của từng mốc, điều kiện hoàn thành và việc nên làm ngay.
 - [Sơ đồ luồng nghiệp vụ](docs/FLOWS.md): đường đi của báo cáo qua web và nhập hộ, phân loại, xử lý, báo kết quả, đóng và mở lại phiếu.
 - [Ma trận quyền](docs/ACCESS_CONTROL.md): ai được thao tác và đọc từng loại dữ liệu, ảnh, lịch sử và thông báo.
 - [State machine và tiêu chí chấp nhận](docs/ACCEPTANCE_CRITERIA.md): điều kiện chuyển trạng thái và các ca để viết test.
 - [Sổ giả định và kịch bản mô phỏng](docs/ASSUMPTIONS.md): phân biệt căn cứ công khai, suy luận và các điều chưa thể xác minh.
+- [Bản xem trước màn hình cư dân](design/resident-preview/README.md) và [vòng đời tài khoản](design/account-preview/README.md): ảnh thiết kế để duyệt trước khi code.
 
 ## Bước tiếp theo
 
 1. Bắt đầu [M2](docs/ROADMAP.md): dựng bộ khung web, API, database và CI; seed tài khoản giả.
-2. Làm đăng nhập, liên kết cư dân–căn hộ và kiểm tra quyền ở backend theo [ma trận quyền](docs/ACCESS_CONTROL.md).
+2. Làm luồng mời/kích hoạt, đăng nhập, liên kết cư dân–căn hộ và kiểm tra quyền ở backend theo [vòng đời tài khoản](docs/ACCOUNT_LIFECYCLE.md) và [ma trận quyền](docs/ACCESS_CONTROL.md).
 3. Viết test cho một đường thành công và các ca vượt quyền trước khi đóng từng issue chức năng.
 
 Đây là dự án cá nhân phục vụ học tập và portfolio. Những chính sách vận hành trong PRD chưa được một chung cư cụ thể xác nhận.

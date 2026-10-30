@@ -1,0 +1,99 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="900" viewBox="0 0 1440 900" role="img" aria-label="CivicFix: giao diện sổ điều phối sự cố khu vực chung">
+  <rect width="1440" height="900" fill="#F7F8F5"/>
+  <style>
+    text { font-family: Arial, Helvetica, sans-serif; fill:#1E2925; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .muted { fill:#68736E; }
+    .signal { fill:#1B695B; }
+    .small { font-size:13px; }
+    .body { font-size:15px; }
+    .label { font-size:12px; letter-spacing:1.1px; }
+    .rule { stroke:#D6DDD7; stroke-width:1; }
+  </style>
+  <g id="Top-navigation">
+    <rect width="1440" height="70" fill="#FFFFFF"/>
+    <line x1="0" y1="69.5" x2="1440" y2="69.5" class="rule"/>
+    <path d="M44 23h19v24H44z M44 35h19 M54 23v24" fill="none" stroke="#1B695B" stroke-width="2"/>
+    <path d="M63 23l8 7v17h-8" fill="none" stroke="#1B695B" stroke-width="2"/>
+    <text x="84" y="45" font-size="23" font-weight="700" letter-spacing="-0.7">CivicFix</text>
+    <text x="286" y="43" class="body muted">Tổng quan</text>
+    <text x="411" y="43" class="body" font-weight="700">Tiếp nhận</text>
+    <rect x="410" y="67" width="76" height="3" fill="#1B695B"/>
+    <text x="526" y="43" class="body muted">Công việc</text>
+    <text x="644" y="43" class="body muted">Lịch sử</text>
+    <text x="1065" y="31" class="label muted">KHÔNG GIAN LÀM VIỆC</text>
+    <text x="1065" y="51" class="body">Chung cư Minh An</text>
+    <line x1="1267" y1="17" x2="1267" y2="53" class="rule"/>
+    <text x="1291" y="43" class="body">Bảo Ngọc</text>
+  </g>
+  <g id="Page-heading">
+    <text x="60" y="120" class="label signal" font-weight="700">ĐIỀU PHỐI / 27.10.2026</text>
+    <text x="60" y="168" font-size="34" font-weight="700" letter-spacing="-1">Phiếu cần quyết định</text>
+    <text x="60" y="198" class="body muted">Hai báo cáo mới đang chờ ban quản lý xem xét và giao người xử lý.</text>
+    <rect x="1188" y="135" width="192" height="42" rx="3" fill="#1E2925"/>
+    <text x="1213" y="162" font-size="14" fill="#FFFFFF" font-weight="700">+ Nhập hộ báo cáo</text>
+    <line x1="60" y1="222" x2="1380" y2="222" class="rule"/>
+  </g>
+  <g id="Issue-ledger">
+    <text x="60" y="259" font-size="17" font-weight="700">Sổ sự cố</text>
+    <text x="617" y="259" class="small muted">04 PHIẾU ĐANG MỞ</text>
+    <line x1="60" y1="276" x2="744" y2="276" class="rule"/>
+    <rect x="60" y="277" width="684" height="122" fill="#EAF0EB"/>
+    <rect x="60" y="277" width="3" height="122" fill="#1B695B"/>
+    <text x="81" y="306" class="label muted">TẦNG</text><text x="81" y="345" font-size="29" font-weight="700" class="signal mono">03</text>
+    <text x="151" y="307" class="small mono muted">CF-1024</text>
+    <text x="151" y="338" font-size="21" font-weight="700">Đèn hành lang tầng 3</text>
+    <text x="151" y="366" class="body muted">Hành lang trước căn 03 · 09:42 hôm nay</text>
+    <text x="621" y="309" class="small signal" font-weight="700">CẦN XEM</text>
+    <line x1="60" y1="399" x2="744" y2="399" class="rule"/>
+    <text x="81" y="429" class="label muted">TẦNG</text><text x="81" y="468" font-size="29" class="mono">02</text>
+    <text x="151" y="431" class="small mono muted">CF-1025</text>
+    <text x="151" y="462" font-size="21" font-weight="700">Rò nước ống chung</text>
+    <text x="151" y="490" class="body muted">Trục ống tầng 2 · 08:17 hôm nay</text>
+    <text x="621" y="432" class="small signal" font-weight="700">CẦN XEM</text>
+    <line x1="60" y1="518" x2="744" y2="518" class="rule"/>
+    <text x="81" y="548" class="label muted">TẦNG</text><text x="81" y="587" font-size="29" class="mono">01</text>
+    <text x="151" y="550" class="small mono muted">CF-1026</text>
+    <text x="151" y="581" font-size="21" font-weight="700">Cửa sảnh đóng không kín</text>
+    <text x="151" y="609" class="body muted">Sảnh chính · 19:08 hôm qua</text>
+    <text x="607" y="551" class="small muted" font-weight="700">CHỜ BỔ SUNG</text>
+    <line x1="60" y1="637" x2="744" y2="637" class="rule"/>
+    <text x="81" y="667" class="label muted">TẦNG</text><text x="81" y="706" font-size="29" class="mono">05</text>
+    <text x="151" y="669" class="small mono muted">CF-1027</text>
+    <text x="151" y="700" font-size="21" font-weight="700">Đèn cầu thang tầng 5</text>
+    <text x="151" y="728" class="body muted">Cầu thang phía đông · 14:21 hôm qua</text>
+    <text x="613" y="670" class="small muted" font-weight="700">ĐANG SỬA</text>
+    <line x1="60" y1="756" x2="744" y2="756" class="rule"/>
+    <text x="60" y="797" class="body signal" font-weight="700">Xem toàn bộ phiếu →</text>
+  </g>
+  <line x1="770" y1="244" x2="770" y2="831" class="rule"/>
+  <g id="Selected-issue-dossier">
+    <text x="802" y="259" font-size="17" font-weight="700">Hồ sơ đang chọn</text>
+    <text x="802" y="304" class="label mono signal" font-weight="700">CF-1024 / BÁO CÁO TỪ WEB</text>
+    <text x="802" y="348" font-size="27" font-weight="700" letter-spacing="-0.5">Đèn hành lang tầng 3</text>
+    <text x="802" y="376" class="body muted">Đèn nhấp nháy từ tối qua. Lối đi khá tối.</text>
+    <line x1="802" y1="404" x2="1380" y2="404" class="rule"/>
+    <text x="802" y="438" class="label muted">NƠI THIẾT BỊ HỎNG</text>
+    <text x="802" y="465" class="body" font-weight="700">Hành lang trước căn 03</text>
+    <text x="1112" y="438" class="label muted">THỜI ĐIỂM NHẬN</text>
+    <text x="1112" y="465" class="body">09:42 · 27/10/2026</text>
+    <line x1="802" y1="486" x2="1380" y2="486" class="rule"/>
+    <text x="802" y="520" class="label muted">NGƯỜI BÁO</text>
+    <text x="802" y="547" class="body" font-weight="700">Nguyễn Minh Anh</text>
+    <text x="1112" y="520" class="label muted">CĂN HỘ NGƯỜI BÁO</text>
+    <text x="1112" y="547" class="body">03 · Đã xác minh</text>
+    <line x1="802" y1="568" x2="1380" y2="568" class="rule"/>
+    <text x="802" y="608" font-size="17" font-weight="700">Diễn tiến</text>
+    <circle cx="808" cy="643" r="4" fill="#1B695B"/>
+    <line x1="808" y1="647" x2="808" y2="707" stroke="#D6DDD7" stroke-width="1"/>
+    <text x="829" y="648" class="body" font-weight="700">Đã ghi nhận báo cáo</text>
+    <text x="829" y="673" class="small muted">Cư dân gửi qua web · 09:42, 27/10/2026</text>
+    <text x="829" y="703" class="body muted">Đang chờ quản lý xem xét.</text>
+    <line x1="802" y1="743" x2="1380" y2="743" class="rule"/>
+    <text x="802" y="776" class="small muted">Quyết định sẽ được lưu vào lịch sử phiếu.</text>
+    <rect x="802" y="791" width="202" height="42" rx="3" fill="#FFFFFF" stroke="#89958E"/>
+    <text x="825" y="817" font-size="14" font-weight="700">Yêu cầu bổ sung</text>
+    <rect x="1020" y="791" width="360" height="42" rx="3" fill="#1E2925"/>
+    <text x="1133" y="817" font-size="14" font-weight="700" fill="#FFFFFF">Tiếp nhận phiếu</text>
+  </g>
+</svg>

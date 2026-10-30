@@ -28,7 +28,7 @@ Từ M2, cấu hình CI chạy build và các test hiện có cho mỗi lần c�
 | Milestone GitHub | Người làm xong sẽ demo được gì? | Ước lượng |
 |---|---|---:|
 | **M1 — Chốt kịch bản giả lập, quyền xem dữ liệu và trạng thái phiếu** | Có ba tình huống, sơ đồ luồng, quyền từng vai trò và tiêu chí chấp nhận | 8–12 giờ |
-| **M2 — Đăng nhập, gắn cư dân với căn hộ và chặn truy cập trái quyền** | Ba vai trò đăng nhập; căn hộ xác minh; backend từ chối vượt quyền | 20–35 giờ |
+| **M2 — Quản trị viên mời cư dân, kích hoạt tài khoản, gắn căn hộ và chặn truy cập trái quyền** | Cư dân được mời/kích hoạt/khôi phục; bốn vai trò đăng nhập; căn hộ xác minh; backend từ chối vượt quyền | 35–60 giờ |
 | **M3 — Cư dân tạo, xem phiếu khu vực chung và lưu lịch sử ban đầu** | Cư dân gửi/xem phiếu; quản lý thấy người báo và căn hộ; người khác không đọc được | 25–40 giờ |
 | **M4 — Quản lý tiếp nhận, yêu cầu bổ sung, từ chối và phân công phiếu** | Quản lý xử lý hàng đợi; kỹ thuật viên nhận đúng việc; mọi quyết định có lịch sử | 25–40 giờ |
 | **M5 — Kỹ thuật viên cập nhật, quản lý xác nhận, cư dân nhận kết quả và phản hồi** | Luồng đầu cuối từ báo cáo tới kết quả và mở lại khi chưa sửa xong | 30–50 giờ |
@@ -37,7 +37,7 @@ Từ M2, cấu hình CI chạy build và các test hiện có cho mỗi lần c�
 | **M8 — Tạm hoãn, chuyển người xử lý và theo dõi hạn/việc tồn** | Quản lý thấy lý do chờ, người chịu trách nhiệm, mốc xử lý và dữ liệu thống kê có thể giải thích | 20–35 giờ |
 | **M9 — Deploy demo, dữ liệu giả, tài liệu chạy thử và kịch bản trình bày** | Người khác mở repo và demo có thể tự chạy luồng, xem giới hạn của sản phẩm | 15–25 giờ |
 
-Tổng từ M1 đến M9 khoảng **181–302 giờ**, chưa kể dự phòng cho việc học và sửa sai. Nếu bạn làm khoảng 10 giờ/tuần, hãy chuẩn bị cho nhiều tháng làm việc; đừng tự ép một ngày hoàn thành khi chưa có dữ liệu tốc độ của chính mình. **Sau M5 đã có demo đầu cuối.** M6–M8 tăng độ bao phủ nghiệp vụ; M9 làm bản portfolio dễ xem và dễ chạy. Kiểm thử, phân quyền và tích hợp vẫn nằm trong M2–M8, không đợi M9.
+Tổng từ M1 đến M9 khoảng **196–327 giờ**, chưa kể dự phòng cho việc học và sửa sai. M2 tăng vì thêm luồng mời, kích hoạt, khôi phục và thu hồi quyền; con số chỉ giúp hình dung khối lượng, không phải thời hạn cam kết. Nếu bạn làm khoảng 10 giờ/tuần, hãy chuẩn bị cho nhiều tháng làm việc; đừng tự ép một ngày hoàn thành khi chưa có dữ liệu tốc độ của chính mình. **Sau M5 đã có demo đầu cuối.** M6–M8 tăng độ bao phủ nghiệp vụ; M9 làm bản portfolio dễ xem và dễ chạy. Kiểm thử, phân quyền và tích hợp vẫn nằm trong M2–M8, không đợi M9.
 
 ## 3. M1 — Chốt kịch bản giả lập, quyền xem dữ liệu và trạng thái phiếu
 
@@ -51,17 +51,19 @@ Tổng từ M1 đến M9 khoảng **181–302 giờ**, chưa kể dự phòng ch
 
 **Xong khi:** Kịch bản, ma trận quyền và tiêu chí chấp nhận đủ cụ thể để viết test ở các milestone sau. Không cần phỏng vấn cư dân để hoàn thành portfolio.
 
-## 4. M2 — Đăng nhập, gắn cư dân với căn hộ và chặn truy cập trái quyền
+## 4. M2 — Quản trị viên mời cư dân, kích hoạt tài khoản, gắn căn hộ và chặn truy cập trái quyền
 
 **Các issue cần giải quyết:**
 
 - [ ] Khởi tạo React/TypeScript, Spring Boot, PostgreSQL, Docker Compose, Flyway và CI build/test tối thiểu.
 - [ ] Tạo users, buildings, apartments, building memberships và resident–apartment links; seed dữ liệu giả gồm căn 03.
+- [ ] Làm luồng quản trị viên mời cư dân, xác minh căn hộ, gửi lại/thu hồi lời mời; dùng email thử nghiệm cục bộ và token một lần có hạn theo [vòng đời tài khoản](ACCOUNT_LIFECYCLE.md).
+- [ ] Làm màn hình kích hoạt, tự đặt mật khẩu, link hết hạn, quên/đặt lại mật khẩu và thu hồi phiên khi đổi mật khẩu hoặc kết thúc membership.
 - [ ] Làm login, logout theo cơ chế đã chọn, `/auth/me`, tài khoản không hoạt động và màn hình phân vai.
 - [ ] Kiểm tra quyền backend theo role + building; test cư dân gọi API quản lý, nhân viên sai chung cư, tài khoản bị vô hiệu hóa.
 - [ ] Hướng dẫn chạy từ clone sạch và dùng secret mẫu; không commit mật khẩu/secrets thật.
 
-**Xong khi:** Đăng nhập bằng các tài khoản demo trên web; API chặn vượt quyền; migration và CI chạy. Đây là một luồng tích hợp có bảo mật và test ngay tại M2.
+**Xong khi:** Quản trị viên mời tài khoản giả, cư dân kích hoạt qua hộp thư thử nghiệm, đăng nhập và khôi phục được mật khẩu; gửi lại/thu hồi/mời sai và chuyển đi không cấp quyền trái phép; API chặn vượt quyền; migration và CI chạy. Đây là một luồng tích hợp có bảo mật và test ngay tại M2.
 
 ## 5. M3 — Cư dân tạo, xem phiếu khu vực chung và lưu lịch sử ban đầu
 
@@ -147,7 +149,7 @@ Tổng từ M1 đến M9 khoảng **181–302 giờ**, chưa kể dự phòng ch
 
 ## 12. Việc làm ngay
 
-1. Bắt đầu M2 bằng lát cắt đăng nhập + căn hộ + quyền, dựa trên [ma trận quyền](ACCESS_CONTROL.md) và các ca AC-01–AC-26 trong [tiêu chí chấp nhận](ACCEPTANCE_CRITERIA.md).
+1. Bắt đầu M2 bằng lát cắt quản trị viên mời → cư dân kích hoạt → đăng nhập → backend xác định căn hộ/quyền, dựa trên [vòng đời tài khoản](ACCOUNT_LIFECYCLE.md), [ma trận quyền](ACCESS_CONTROL.md) và các ca AC-27–AC-40 trong [tiêu chí chấp nhận](ACCEPTANCE_CRITERIA.md).
 2. Trong M2, seed tài khoản giả cho ba vai trò nghiệp vụ và một quản trị viên riêng; kiểm tra quyền từ backend trước khi xây màn hình quản lý phiếu.
 3. Mỗi lần xong một issue, chạy demo chức năng đó và test hồi quy trước khi chọn issue kế tiếp.
 

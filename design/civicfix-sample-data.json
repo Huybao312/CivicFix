@@ -1,0 +1,16 @@
+{
+  "workspace": "Chung cư Minh An",
+  "snapshot": "27/10/2026 10:15",
+  "tickets": [
+    {"id":"CF-1024","title":"Đèn hành lang tầng 3","location":"Hành lang trước căn 03","floor":"03","reported":"09:42 hôm nay","status":"Cần xem","category":"Hành lang"},
+    {"id":"CF-1025","title":"Rò nước ống chung","location":"Trục ống tầng 2","floor":"02","reported":"08:17 hôm nay","status":"Cần xem","category":"Trục kỹ thuật"},
+    {"id":"CF-1028","title":"Chuông báo cháy kêu ngắt quãng","location":"Sảnh tầng trệt","floor":"Trệt","reported":"07:36 hôm nay","status":"Cần xem","category":"Sảnh và cửa"},
+    {"id":"CF-1026","title":"Cửa sảnh đóng không kín","location":"Sảnh chính","floor":"01","reported":"19:08 hôm qua","status":"Chờ bổ sung","category":"Sảnh và cửa"},
+    {"id":"CF-1029","title":"Nắp hộp điện bị lỏng","location":"Hành lang tầng 4","floor":"04","reported":"17:21 hôm qua","status":"Chờ bổ sung","category":"Hành lang"},
+    {"id":"CF-1027","title":"Đèn cầu thang tầng 5","location":"Cầu thang phía đông","floor":"05","reported":"14:21 hôm qua","status":"Đang sửa","category":"Cầu thang"},
+    {"id":"CF-1030","title":"Tay vịn hành lang lung lay","location":"Hành lang tầng 6","floor":"06","reported":"11:04 hôm qua","status":"Đang sửa","category":"Hành lang"},
+    {"id":"CF-1031","title":"Gạch hành lang bị bong","location":"Hành lang tầng 3","floor":"03","reported":"09:13 hôm qua","status":"Đang sửa","category":"Hành lang"},
+    {"id":"CF-1032","title":"Đầu đọc thẻ cửa sảnh lỗi","location":"Cửa sảnh phía nam","floor":"Trệt","reported":"16:40 25/10","status":"Đang sửa","category":"Sảnh và cửa"},
+    {"id":"CF-1033","title":"Đèn báo tủ điện chập chờn","location":"Phòng kỹ thuật tầng 1","floor":"01","reported":"10:20 25/10","status":"Chờ xác nhận","category":"Trục kỹ thuật"}
+  ]
+}

@@ -282,6 +282,7 @@ Quyền được kiểm tra tại từng endpoint và từng đối tượng. AP
 - Khi tạo báo cáo, backend lấy liên kết căn hộ đã xác minh và đang có hiệu lực của người báo; lưu `apartment_id_at_report` cùng nhãn căn hộ tại thời điểm báo trong bản ghi người báo. Nếu người báo có nhiều căn hộ đã xác minh, chỉ cho chọn trong danh sách đó. Thay đổi căn hộ về sau không âm thầm đổi thông tin lịch sử của phiếu cũ.
 - `location_description` mô tả **nơi thiết bị hỏng**; `apartment_id_at_report` mô tả **căn hộ của người báo**. Hai trường có thể khác nhau và không được suy ra lẫn nhau.
 - Tài khoản được mời hoặc tạo bởi quản trị viên. Không tự đăng ký rồi tự chọn căn hộ/role. Khi rời chung cư hoặc nghỉ việc, membership bị vô hiệu hóa; lịch sử vẫn giữ actor cũ.
+- Quy trình mời, kích hoạt, đặt lại mật khẩu, xử lý mời nhầm và kết thúc liên kết căn hộ được chốt trong [vòng đời tài khoản cư dân](ACCOUNT_LIFECYCLE.md). Email đã xác nhận không tự chứng minh người đó ở căn hộ đã khai.
 - Nhân viên chỉ thấy phiếu thuộc chung cư mà membership còn hiệu lực. Bản đầu có một chung cư nhưng vẫn kiểm tra quan hệ này ở backend.
 - Không đưa tên, số căn hộ, email hoặc số điện thoại người báo vào thông báo công khai của sự cố trùng.
 

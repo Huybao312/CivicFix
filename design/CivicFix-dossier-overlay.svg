@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="900" viewBox="0 0 1440 900" role="img" aria-label="CivicFix: giao diện sổ điều phối sự cố khu vực chung">
+  <style>
+    text { font-family: Arial, Helvetica, sans-serif; fill:#1E2925; }
+    .mono { font-family: Menlo, Consolas, monospace; }
+    .muted { fill:#68736E; }
+    .signal { fill:#1B695B; }
+    .small { font-size:13px; }
+    .body { font-size:15px; }
+    .label { font-size:12px; letter-spacing:1.1px; }
+    .rule { stroke:#D6DDD7; stroke-width:1; }
+  </style>
+  <g id="Selected-issue-dossier">
+    <text x="802" y="259" font-size="17" font-weight="700">Hồ sơ đang chọn</text>
+    <text x="802" y="304" class="label mono signal" font-weight="700">CF-1024 / BÁO CÁO TỪ WEB</text>
+    <text x="802" y="348" font-size="27" font-weight="700" letter-spacing="-0.5">Đèn hành lang tầng 3</text>
+    <text x="802" y="376" class="body muted">Đèn nhấp nháy từ tối qua. Lối đi khá tối.</text>
+    <line x1="802" y1="404" x2="1380" y2="404" class="rule"/>
+    <text x="802" y="438" class="label muted">NƠI THIẾT BỊ HỎNG</text>
+    <text x="802" y="465" class="body" font-weight="700">Hành lang trước căn 03</text>
+    <text x="1112" y="438" class="label muted">THỜI ĐIỂM NHẬN</text>
+    <text x="1112" y="465" class="body">09:42 · 27/10/2026</text>
+    <line x1="802" y1="486" x2="1380" y2="486" class="rule"/>
+    <text x="802" y="520" class="label muted">NGƯỜI BÁO</text>
+    <text x="802" y="547" class="body" font-weight="700">Nguyễn Minh Anh</text>
+    <text x="1112" y="520" class="label muted">CĂN HỘ NGƯỜI BÁO</text>
+    <text x="1112" y="547" class="body">03 · Đã xác minh</text>
+    <line x1="802" y1="568" x2="1380" y2="568" class="rule"/>
+    <text x="802" y="608" font-size="17" font-weight="700">Diễn tiến</text>
+    <circle cx="808" cy="643" r="4" fill="#1B695B"/>
+    <line x1="808" y1="647" x2="808" y2="707" stroke="#D6DDD7" stroke-width="1"/>
+    <text x="829" y="648" class="body" font-weight="700">Đã ghi nhận báo cáo</text>
+    <text x="829" y="673" class="small muted">Cư dân gửi qua web · 09:42, 27/10/2026</text>
+    <text x="829" y="703" class="body muted">Đang chờ quản lý xem xét.</text>
+    <line x1="802" y1="743" x2="1380" y2="743" class="rule"/>
+    <text x="802" y="776" class="small muted">Quyết định sẽ được lưu vào lịch sử phiếu.</text>
+    <rect x="802" y="791" width="202" height="42" rx="3" fill="#FFFFFF" stroke="#89958E"/>
+    <text x="825" y="817" font-size="14" font-weight="700">Yêu cầu bổ sung</text>
+    <rect x="1020" y="791" width="360" height="42" rx="3" fill="#1E2925"/>
+    <text x="1133" y="817" font-size="14" font-weight="700" fill="#FFFFFF">Tiếp nhận phiếu</text>
+  </g>
+</svg>

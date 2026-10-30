@@ -14,6 +14,9 @@ Ký hiệu trong bảng: **Có** = được phép trong phạm vi vai trò; **C�
 
 | Hành động | Cư dân | Quản lý | Kỹ thuật viên | Quản trị viên |
 |---|---|---|---|---|
+| Mời cư dân, gửi lại/thu hồi lời mời, xác minh hoặc kết thúc liên kết căn hộ | Không | Không | Không | Có, đúng chung cư; có audit |
+| Kích hoạt lời mời | Người giữ link hợp lệ tự đặt mật khẩu; chưa có quyền đọc phiếu trước khi hoàn tất | Không làm hộ | Không làm hộ | Không đặt mật khẩu hộ |
+| Quên/đặt lại mật khẩu | Tài khoản của mình qua kênh đã xác nhận | Tài khoản của mình | Tài khoản của mình | Không xem hoặc đặt lại mật khẩu người khác |
 | Tạo phiếu qua web | Có, với danh tính của chính mình | Có, với danh tính của chính mình | Chỉ khi cũng có role cư dân | Chỉ khi cũng có role cư dân |
 | Nhập hộ phiếu từ điện thoại/chat/trực tiếp | Không | Có | Không | Không, trừ khi cũng có role quản lý |
 | Xem danh sách và chi tiết phiếu | Của mình; bản công khai của phiếu chính đang theo dõi | Mọi phiếu cùng chung cư | Phiếu được giao | Không, trừ khi có role khác |
@@ -57,3 +60,6 @@ Nhập hộ luôn lưu **người nhập** và **nguồn nhận báo**; không b
 3. Thu hồi membership hoặc phân công rồi gọi lại API: quyền cũ chấm dứt.
 4. Người theo dõi phiếu trùng đọc mọi endpoint liên quan: chỉ nhận bản công khai, kể cả ảnh và thông báo.
 5. Quản trị viên chỉ có role quản trị không thể đọc hồ sơ sự cố; quản lý không thể sửa tài khoản nếu thiếu role quản trị.
+6. Lời mời chưa kích hoạt, đã hết hạn hoặc đã thu hồi không tạo membership có hiệu lực; token dùng lần hai bị từ chối. Kết thúc membership hoặc đổi mật khẩu làm phiên cũ mất quyền.
+
+Xem [vòng đời tài khoản cư dân](ACCOUNT_LIFECYCLE.md) để triển khai các trạng thái mời, kích hoạt, khôi phục và chuyển căn hộ.

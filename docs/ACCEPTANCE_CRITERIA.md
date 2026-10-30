@@ -68,6 +68,20 @@ Mỗi dòng là một ca độc lập; “kết quả” phải quan sát đư�
 | AC-24 | Phiếu `ASSIGNED`/`IN_PROGRESS` đang chờ vật tư | Quản lý xác nhận tạm hoãn rồi cho tiếp tục | `ON_HOLD` có lý do và mốc cập nhật; tiếp tục đúng trạng thái trước hoặc `ASSIGNED` khi đổi người; lịch sử thời gian chờ còn nguyên. |
 | AC-25 | Hai quản lý cùng đọc version N | Cả hai cùng phân công hoặc đổi status | Chỉ một command commit; command còn lại nhận `409` và trạng thái/version hiện tại; không có hai người phụ trách chính hoặc sự kiện mồ côi. |
 | AC-26 | Tài khoản quản trị viên chỉ có role quản trị | Cố xem phiếu hoặc đóng phiếu; quản lý cố sửa membership | Cả hai thao tác bị từ chối theo ma trận quyền. |
+| AC-27 | Admin đúng chung cư đã xác minh cư dân giả và căn 03 | Tạo lời mời, bấm gửi hai lần | Một invitation `PENDING`, một membership `PENDING`, một email thử nghiệm; có audit actor và căn cứ; chưa có quyền đọc phiếu. |
+| AC-28 | Quản lý hoặc admin của chung cư khác | Gọi trực tiếp API mời, xác minh hoặc kết thúc liên kết căn hộ | Bị từ chối; không có invitation, membership, email hoặc audit thành công. |
+| AC-29 | Email đã có user nhưng chưa có membership tại chung cư | Admin mời vào căn 03 | Dùng lại user, không tạo danh tính trùng; membership mới chỉ có hiệu lực sau khi người nhận chấp nhận lời mời. |
+| AC-30 | Lời mời còn hạn, chưa dùng, thông tin căn hộ đúng | Cư dân mở link và đặt mật khẩu hợp lệ | Token dùng một lần; email được xác nhận; user/membership hoạt động cùng giao dịch; cư dân chỉ thấy căn hộ được admin xác minh. |
+| AC-31 | Link mời hết hạn, đã dùng hoặc đã thu hồi | Mở hoặc gửi lại request kích hoạt | Không cấp quyền; giao diện không lộ token hay dữ liệu cư dân khác. Gửi lại tạo token mới và làm link cũ mất hiệu lực. |
+| AC-32 | Người nhận thấy căn hộ trong lời mời bị sai | Chọn “Báo thông tin không đúng” | Không kích hoạt; có việc kiểm tra cho admin; không cho tự sửa số căn hộ trong link. |
+| AC-33 | Email không tồn tại, sai mật khẩu, user chưa kích hoạt hoặc bị khóa | Thử đăng nhập | Thông báo công khai đủ chung, không dò được tài khoản; có giới hạn tốc độ; không tạo phiên. |
+| AC-34 | Người dùng yêu cầu quên mật khẩu với email có và không có tài khoản | Gửi yêu cầu | Response và thông báo giao diện tương đương; chỉ tài khoản đủ điều kiện nhận email thử nghiệm, token reset riêng có hạn và dùng một lần. |
+| AC-35 | Token reset hợp lệ | Đặt mật khẩu mới rồi thử token lại và dùng phiên cũ | Mật khẩu mới đăng nhập được; token không dùng lại; phiên cũ bị thu hồi; email đã xác nhận nhận thông báo đổi mật khẩu. |
+| AC-36 | Cư dân căn 03 chuyển đi | Admin kết thúc membership và liên kết căn hộ khi cư dân còn phiên | API/ảnh/thông báo cũ không đọc được ngay; phiên mất quyền; phiếu và snapshot căn 03 tại thời điểm báo còn nguyên cho người có quyền xử lý. |
+| AC-37 | Admin mời sai email hoặc căn hộ và chưa kích hoạt | Thu hồi lời mời | Link không kích hoạt được, không có membership hiệu lực; sự kiện thu hồi lưu actor/lý do. |
+| AC-38 | Tài khoản có hai căn hộ xác minh rồi chuyển từ căn 03 sang căn 04 | Báo trước và sau khi thay đổi | Phiếu cũ giữ snapshot căn 03; phiếu mới chỉ chọn từ liên kết đang hiệu lực; client không thể gửi căn hộ đã hết quyền. |
+| AC-39 | Email đã có user `ACTIVE` và nhận lời mời vào căn 05-08 | Mở link, đăng nhập đúng user rồi chấp nhận; thử đăng nhập bằng user khác | Chỉ membership căn 05-08 của user được mời được kích hoạt; mật khẩu cũ không đổi; user khác không thể nhận lời mời. |
+| AC-40 | User `DISABLED` nhận lời mời mới | Mở link hoặc thử chấp nhận bằng phiên cũ | Không tự kích hoạt lại user hay membership; cần quyết định quản trị riêng có audit. |
 
 ## 4. Quy tắc xử lý lỗi và mức chứng cứ
 
