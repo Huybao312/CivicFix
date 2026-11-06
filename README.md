@@ -54,7 +54,7 @@ cp .env.example .env
 
 Mở `.env`, thay giá trị mẫu của `POSTGRES_PASSWORD` bằng mật khẩu dùng riêng cho database local. Nếu đã có `.env`, giữ file hiện tại. `.env` được Git bỏ qua; `.env.example` chỉ chứa giá trị mẫu.
 
-Profile `local` đọc `.env` dưới dạng Java properties, vì vậy nhập giá trị trực tiếp sau dấu `=`, không bọc trong dấu nháy. Thay mật khẩu trong `.env` sau khi database đã khởi tạo không tự đổi mật khẩu của PostgreSQL.
+Docker Compose đọc `.env`; profile `local` của Spring Boot lấy thông tin kết nối từ container đang chạy. Backend không đọc lại `.env` dưới dạng Java properties. Có thể dùng dấu nháy đơn để giữ nguyên ký tự đặc biệt, ví dụ `POSTGRES_PASSWORD='local$example'` (chỉ là ví dụ, hãy chọn mật khẩu riêng). Thay mật khẩu trong `.env` sau khi database đã khởi tạo không tự đổi mật khẩu của PostgreSQL.
 
 ### 2. Chạy PostgreSQL
 
@@ -76,7 +76,7 @@ cd backend
 ./mvnw spring-boot:run -Dspring-boot.run.profiles=local
 ```
 
-Chạy lệnh từ thư mục `backend` để profile `local` tìm thấy `../.env`. Flyway tự áp dụng migration khi ứng dụng khởi động. Backend mặc định chạy tại `http://localhost:8080`; hiện chưa có API nghiệp vụ, nên truy cập đường dẫn `/` có thể trả về HTTP 404.
+Chạy lệnh từ thư mục `backend` để profile `local` tìm thấy `../compose.yaml`. PostgreSQL phải được khởi động ở bước 2; Backend chỉ lấy thông tin kết nối từ container, không tự khởi động hay dừng Compose. Cổng, user và mật khẩu được lấy từ cấu hình container thực tế. Flyway tự áp dụng migration khi ứng dụng khởi động. Backend mặc định chạy tại `http://localhost:8080`; hiện chưa có API nghiệp vụ, nên truy cập đường dẫn `/` có thể trả về HTTP 404.
 
 ### 4. Chạy Frontend
 
