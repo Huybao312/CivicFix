@@ -2,7 +2,7 @@
 
 CivicFix là dự án web responsive hỗ trợ cư dân báo sự cố kỹ thuật tại khu vực chung của chung cư, đồng thời giúp ban quản lý tiếp nhận, phân công và theo dõi quá trình xử lý.
 
-**Trạng thái:** Đang thực hiện M2. Đã có bộ khung React/TypeScript, Spring Boot, PostgreSQL qua Docker Compose, migration Flyway tạo bảng `buildings` và CI kiểm tra Frontend/Backend. Frontend hiện hiển thị trang mẫu; các chức năng nghiệp vụ chưa được triển khai. Nhu cầu người dùng thực tế chưa được xác thực.
+**Trạng thái:** Đã triển khai các chức năng M2 ở môi trường local: đăng nhập/session, tài khoản và căn hộ, mời/kích hoạt cư dân, đặt lại mật khẩu, thu hồi quyền và giao diện theo vai trò. API, migration và luồng trình duyệt có kiểm thử tự động. Chức năng phiếu sự cố thuộc M3 trở đi; nhu cầu người dùng thực tế chưa được xác thực.
 
 ## Bài toán
 
@@ -61,11 +61,11 @@ Docker Compose đọc `.env`; profile `local` của Spring Boot lấy thông tin
 Tại gốc repo:
 
 ```bash
-docker compose up -d db
+docker compose up -d db mailpit
 docker compose ps
 ```
 
-Chờ service `db` chuyển sang `healthy`. Database `civicfix` dùng user `civicfix` và được mở tại `127.0.0.1:5433`. Dữ liệu nằm trong named volume của Compose.
+Chờ service `db` chuyển sang `healthy`. Database `civicfix` dùng user `civicfix` và được mở tại `127.0.0.1:5433`. Dữ liệu nằm trong named volume của Compose. Mailpit nhận email thử nghiệm tại SMTP `127.0.0.1:1025`; mở hộp thư tại `http://localhost:8025`. Không cấu hình gửi email ra Internet.
 
 ### 3. Chạy Backend
 
@@ -76,7 +76,7 @@ cd backend
 ./mvnw spring-boot:run -Dspring-boot.run.profiles=local
 ```
 
-Chạy lệnh từ thư mục `backend` để profile `local` tìm thấy `../compose.yaml`. PostgreSQL phải được khởi động ở bước 2; Backend chỉ lấy thông tin kết nối từ container, không tự khởi động hay dừng Compose. Cổng, user và mật khẩu được lấy từ cấu hình container thực tế. Flyway tự áp dụng migration khi ứng dụng khởi động. Backend mặc định chạy tại `http://localhost:8080`; hiện chưa có API nghiệp vụ, nên truy cập đường dẫn `/` có thể trả về HTTP 404.
+Chạy lệnh từ thư mục `backend` để profile `local` tìm thấy `../compose.yaml`. PostgreSQL phải được khởi động ở bước 2; Backend chỉ lấy thông tin kết nối từ container, không tự khởi động hay dừng Compose. Cổng, user và mật khẩu được lấy từ cấu hình container thực tế. Flyway tự áp dụng migration khi ứng dụng khởi động. Backend mặc định chạy tại `http://localhost:8080`; API tài khoản nằm dưới `/api`; giao diện được mở từ Vite, không từ cổng Backend.
 
 ### 4. Chạy Frontend
 
@@ -88,7 +88,31 @@ npm ci
 npm run dev
 ```
 
-Mở địa chỉ Vite in trong Terminal, mặc định là `http://localhost:5173`. Hiện trang mẫu Frontend chưa gọi API Backend.
+Mở địa chỉ Vite in trong Terminal, mặc định là `http://localhost:5173`. Vite chuyển tiếp `/api` đến Backend qua proxy cùng origin, để cookie phiên và CSRF hoạt động. Nếu đổi cổng Backend, đặt biến môi trường `CIVICFIX_API_TARGET` cho Vite.
+
+### Tài khoản demo và luồng thử
+
+Chỉ profile `local` tự seed chung cư An Bình, các căn 03–08 và bốn tài khoản giả:
+
+| Vai trò | Email |
+|---|---|
+| Quản trị viên | `admin@demo.civicfix.local` |
+| Quản lý phiếu | `manager@demo.civicfix.local` |
+| Kỹ thuật viên | `technician@demo.civicfix.local` |
+| Cư dân, căn 03 | `resident@demo.civicfix.local` |
+
+Mật khẩu khởi tạo chung: `CivicFix demo passphrase 2026!`. Đây là dữ liệu demo công khai, chỉ dùng trên máy cá nhân. Seed không đặt lại mật khẩu, bật lại tài khoản bị khóa hoặc khôi phục quyền đã kết thúc khi khởi động lại.
+
+1. Đăng nhập admin ở `http://localhost:5173`; chọn **Mời cư dân**.
+2. Nhập tên giả, email mới có đuôi `@demo.civicfix.local`, căn hộ và căn cứ xác minh; kiểm tra rồi gửi.
+3. Mở Mailpit, tìm email đó; mở link trong cửa sổ riêng tư để thử như cư dân mới.
+4. Cư dân kiểm tra căn hộ, tự đặt mật khẩu và đăng nhập. Tài khoản có sẵn phải đăng nhập đúng người nhận trước khi chấp nhận; mật khẩu hiện tại giữ nguyên.
+5. Thử **Quên mật khẩu**; dùng link mới trong Mailpit. Link dùng một lần, có hạn 30 phút; đổi mật khẩu làm phiên cũ mất hiệu lực.
+6. Tại admin, mở chi tiết tài khoản để kết thúc membership, xác minh/kết thúc liên kết căn hộ hoặc vô hiệu hóa tài khoản. Nhật ký thay đổi giữ actor, đối tượng và lý do.
+
+Lời mời có hạn 24 giờ. Gửi lại sau ít nhất 60 giây tạo link mới và vô hiệu hóa link cũ. Báo sai căn hộ dừng kích hoạt và xuất hiện trong danh sách lời mời để admin kiểm tra. Người nhận không tự thay căn hộ.
+
+Các vai trò cư dân/quản lý/kỹ thuật viên có màn hình tài khoản riêng và được kiểm tra quyền ở Backend. Các màn hình này chưa thực hiện nghiệp vụ phiếu M3–M5.
 
 ### 5. Dừng ứng dụng
 
@@ -118,15 +142,26 @@ cd backend
 ./mvnw --batch-mode verify
 ```
 
-Test Backend cần Docker đang chạy. Testcontainers tự tạo PostgreSQL riêng và Flyway chạy migration trên database thử nghiệm; không cần `.env` hoặc service `db` của Compose. Test hiện xác nhận bảng `buildings` được tạo, chưa bao phủ nghiệp vụ tài khoản hay phiếu sự cố.
+Test Backend cần Docker đang chạy. Testcontainers tự tạo PostgreSQL riêng và Flyway chạy migration trên database thử nghiệm; không cần `.env` hoặc service `db` của Compose. Bộ test gồm ràng buộc schema và API vòng đời tài khoản: CSRF, session, phạm vi chung cư, invitation/reset token, gửi trùng đồng thời, thu hồi quyền và các ca từ chối. Chưa kiểm tra nghiệp vụ phiếu M3 trở đi.
 
-Workflow [CI](.github/workflows/ci.yml) chạy Frontend lint/build và Backend verify khi push hoặc mở pull request. Có thể xem kết quả tại [GitHub Actions](https://github.com/Huybao312/CivicFix/actions).
+Kiểm thử trình duyệt với PostgreSQL và Mailpit riêng, chạy từ thư mục `frontend`:
+
+```bash
+npx playwright install chromium
+npm run test:e2e
+```
+
+Script tự khởi động môi trường `civicfix-e2e`, Backend và Vite ở các cổng riêng, chạy Playwright rồi xóa riêng container/volume E2E. Cần các cổng `15433`, `11025`, `18025`, `18080`, `4173` còn trống. Không dùng dữ liệu hoặc mật khẩu `.env` local. Nếu đã có Google Chrome, có thể dùng `CIVICFIX_BROWSER_CHANNEL=chrome npm run test:e2e`.
+
+Workflow [CI](.github/workflows/ci.yml) chạy ba job: Frontend lint/build, Backend verify và Account lifecycle in browser khi push hoặc mở pull request. Có thể xem kết quả tại [GitHub Actions](https://github.com/Huybao312/CivicFix/actions).
 
 ## Bước tiếp theo
 
-1. Tiếp tục [M2](docs/ROADMAP.md): tạo dữ liệu tài khoản, căn hộ, membership và liên kết cư dân–căn hộ; seed dữ liệu giả.
-2. Làm luồng mời/kích hoạt, đăng nhập, liên kết cư dân–căn hộ và kiểm tra quyền ở backend theo [vòng đời tài khoản](docs/ACCOUNT_LIFECYCLE.md) và [ma trận quyền](docs/ACCESS_CONTROL.md).
-3. Viết test cho một đường thành công và các ca vượt quyền trước khi đóng từng issue chức năng.
+1. Rà soát thay đổi M2 và kết quả CI trên commit mới nhất trước khi merge.
+2. Bắt đầu M3: cư dân tạo/xem phiếu sự cố khu vực chung, Backend gắn danh tính và căn hộ xác minh, kiểm tra quyền từng đối tượng.
+3. Giữ nguyên yêu cầu kiểm thử, phân quyền và audit trong từng chức năng mới.
+
+Chi tiết API, các quyết định triển khai và bằng chứng M2 nằm trong [M2 implementation](docs/M2_IMPLEMENTATION.md).
 
 Đây là dự án cá nhân phục vụ học tập và portfolio. Những chính sách vận hành trong PRD chưa được một chung cư cụ thể xác nhận.
 
