@@ -81,3 +81,14 @@ Giao diện phải có trạng thái đang gửi, thành công, lỗi gần trư
 ## 8. Ngoài phạm vi bản portfolio
 
 Không có đăng ký tự do, đăng nhập mạng xã hội, SMS OTP, tải giấy tờ cư dân, xác minh cư trú tự động, nhiều chung cư thật, hay gửi email ra ngoài môi trường demo. Nếu pilot thật, chủ sở hữu quy trình phải quyết định cách xác minh cư trú, đầu mối hỗ trợ, chính sách lưu/xóa dữ liệu và kênh liên hệ trước khi mở tài khoản thật.
+
+## 9. Quyết định triển khai M2
+
+- Session được quản lý bởi Spring Security; cookie HttpOnly, SameSite=Lax và timeout 30 phút. Phiên gắn với `auth_version` của user. Mỗi request kiểm tra lại trạng thái/version; đổi mật khẩu, vô hiệu hóa tài khoản hoặc kết thúc quyền tăng version để chặn phiên cũ ngay.
+- Một user `ACTIVE` có thể xác thực để chấp nhận lời mời mới kể cả không còn membership hoạt động. `/auth/me` chỉ trả membership và căn hộ đang hiệu lực; mọi API theo chung cư vẫn kiểm tra riêng role + building + thời hạn. Không có membership hiệu lực thì màn hình báo chưa có quyền, không cấp quyền đọc dữ liệu chung cư.
+- Lời mời và reset token là hai loại riêng, ngẫu nhiên 32 byte, database chỉ lưu SHA-256. Link dùng fragment để token không đi vào URL request/access log; frontend gửi token trong body POST và xóa fragment khỏi thanh địa chỉ sau khi đọc.
+- Email chỉ gửi vào SMTP loopback/Mailpit và chỉ nhận địa chỉ `@demo.civicfix.local`. Email khôi phục được giao sau commit qua hàng đợi bộ nhớ có giới hạn, để kết quả HTTP không phụ thuộc tài khoản tồn tại hoặc SMTP đang lỗi. Hàng đợi không bền khi Backend khởi động lại; nếu không nhận thư, người thử yêu cầu lại. Không đưa token/email body vào log hoặc audit.
+- Demo giới hạn đăng nhập theo IP + email, và quên mật khẩu theo IP/email trong một JVM. Các giới hạn này chưa phải hệ thống phân tán.
+- Mật khẩu dùng PBKDF2-HMAC-SHA256 theo thư viện Spring Security; cho phép 15–128 code point, kiểm tra danh sách mật khẩu phổ biến và chuỗi lặp. Danh sách ngoại tuyến không thay thế dịch vụ tra cứu toàn bộ mật khẩu từng bị lộ.
+- Khi enable lại tài khoản, các membership/link đã kết thúc không tự được khôi phục; admin phải xác minh và mời lại. Admin không thể sửa trạng thái user toàn cục nếu user còn quyền mở tại chung cư khác.
+- UI mời/đổi căn hộ yêu cầu xác minh ngoài ứng dụng. Backend lấy actor từ session, không nhận quyền quản trị hoặc người xác minh do client tự khai.

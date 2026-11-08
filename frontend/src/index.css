@@ -1,111 +1,265 @@
+@import url("https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap");
 :root {
-  --text: #6b6375;
-  --text-h: #08060d;
-  --bg: #fff;
-  --border: #e5e4e7;
-  --code-bg: #f4f3ec;
-  --accent: #aa3bff;
-  --accent-bg: rgba(170, 59, 255, 0.1);
-  --accent-border: rgba(170, 59, 255, 0.5);
-  --social-bg: rgba(244, 243, 236, 0.5);
-  --shadow:
-    rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
-
-  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --mono: ui-monospace, Consolas, monospace;
-
-  font: 18px/145% var(--sans);
-  letter-spacing: 0.18px;
-  color-scheme: light dark;
-  color: var(--text);
-  background: var(--bg);
+  font-family: "Be Vietnam Pro", Arial, sans-serif;
+  color: #20352e;
+  background: #f6f8f5;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-
-  @media (max-width: 1024px) {
-    font-size: 16px;
-  }
+  --ink: #20352e;
+  --muted: #5c6b64;
+  --accent: #17634d;
+  --pale: #eaf2ec;
+  --line: #d9e1da;
+  --red: #9e3027;
+  --white: #fff;
 }
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --text: #9ca3af;
-    --text-h: #f3f4f6;
-    --bg: #16171d;
-    --border: #2e303a;
-    --code-bg: #1f2028;
-    --accent: #c084fc;
-    --accent-bg: rgba(192, 132, 252, 0.15);
-    --accent-border: rgba(192, 132, 252, 0.5);
-    --social-bg: rgba(47, 48, 58, 0.5);
-    --shadow:
-      rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
-  }
-
-  #social .button-icon {
-    filter: invert(1) brightness(2);
-  }
-}
-
-#root {
-  width: 1126px;
-  max-width: 100%;
-  margin: 0 auto;
-  text-align: center;
-  border-inline: 1px solid var(--border);
-  min-height: 100svh;
-  display: flex;
-  flex-direction: column;
+* {
   box-sizing: border-box;
 }
-
 body {
   margin: 0;
+  min-width: 320px;
 }
-
-h1,
-h2 {
-  font-family: var(--heading);
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+button,
+a,
+input,
+select,
+textarea {
+  touch-action: manipulation;
+}
+button {
+  cursor: pointer;
+  border: 1px solid transparent;
+  border-radius: 5px;
+  min-height: 44px;
+  padding: 10px 17px;
+  color: white;
+  background: var(--ink);
+  font-weight: 600;
+  transition: background 0.15s;
+}
+button:hover {
+  background: #355346;
+}
+button:disabled {
+  opacity: 0.5;
+  cursor: wait;
+}
+button.secondary {
+  background: white;
+  color: var(--ink);
+  border-color: var(--line);
+}
+button.secondary:hover {
+  background: var(--pale);
+}
+button.plain,
+button.text-link {
+  background: none;
+  border: none;
+  color: var(--accent);
+  padding: 8px 6px;
+}
+button.text-link:hover {
+  text-decoration: underline;
+}
+.danger-text {
+  color: var(--red) !important;
+}
+a {
+  color: var(--accent);
+}
+input,
+select,
+textarea {
+  width: 100%;
+  border: 1px solid #aab9ae;
+  border-radius: 5px;
+  padding: 11px 12px;
+  min-height: 44px;
+  color: var(--ink);
+  background: white;
+}
+textarea {
+  min-height: 88px;
+  resize: vertical;
+}
+input[type="checkbox"] {
+  width: 19px;
+  min-height: 19px;
+  accent-color: var(--accent);
+  flex: none;
+}
+input:focus,
+select:focus,
+textarea:focus,
+button:focus-visible,
+a:focus-visible,
+summary:focus-visible {
+  outline: 3px solid #92bba7;
+  outline-offset: 3px;
+}
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 20px;
+  font-size: 14px;
   font-weight: 500;
-  color: var(--text-h);
 }
-
+.helper {
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.7;
+  margin: -8px 0 19px;
+}
 h1 {
-  font-size: 56px;
-  letter-spacing: -1.68px;
-  margin: 32px 0;
-  @media (max-width: 1024px) {
-    font-size: 36px;
-    margin: 20px 0;
-  }
+  font-size: 32px;
+  font-weight: 600;
+  letter-spacing: -1px;
+  margin: 8px 0 12px;
+  line-height: 1.3;
 }
 h2 {
-  font-size: 24px;
-  line-height: 118%;
-  letter-spacing: -0.24px;
-  margin: 0 0 8px;
-  @media (max-width: 1024px) {
-    font-size: 20px;
-  }
+  font-size: 21px;
+  line-height: 1.4;
+  font-weight: 600;
+}
+h3 {
+  font-size: 17px;
+  font-weight: 600;
 }
 p {
+  line-height: 1.7;
+}
+strong {
+  font-weight: 600;
+}
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+}
+.skip-link {
+  position: absolute;
+  left: 20px;
+  top: -80px;
+  padding: 12px;
+  background: white;
+  z-index: 100;
+}
+.skip-link:focus {
+  top: 6px;
+}
+.notice {
+  padding: 14px 16px;
+  background: var(--pale);
+  border-left: 3px solid var(--accent);
+  font-size: 14px;
+  margin: 16px 0;
+}
+.notice.error {
+  background: #fff1ec;
+  border-color: var(--red);
+  color: #892b23;
+}
+.actions {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  margin-top: 25px;
+  flex-wrap: wrap;
+}
+.full-width {
+  width: 100%;
+}
+.section-label {
+  font-size: 11px;
+  letter-spacing: 0.09em;
+  font-weight: 600;
+  color: var(--muted);
+  line-height: 1.7;
+}
+.subtext {
+  display: block;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.7;
+  margin-top: 4px;
+  overflow-wrap: anywhere;
+}
+.checkbox {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  font-size: 13px;
+  line-height: 1.7;
+  margin: 20px 0;
+}
+dialog {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  max-width: 580px;
+  width: calc(100% - 32px);
+  max-height: 90dvh;
+  padding: 26px;
+  color: var(--ink);
+}
+dialog::backdrop {
+  background: rgb(18 35 28 / 0.45);
+}
+.dialog-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+}
+.dialog-heading h2 {
   margin: 0;
 }
-
-code,
-.counter {
-  font-family: var(--mono);
-  display: inline-flex;
-  border-radius: 4px;
-  color: var(--text-h);
+.dialog-heading + p {
+  color: var(--muted);
+  font-size: 14px;
+  margin: 18px 0 25px;
 }
-
-code {
-  font-size: 15px;
-  line-height: 135%;
-  padding: 4px 8px;
-  background: var(--code-bg);
+.invitation-summary {
+  margin: 25px 0;
+  background: #f5f8f4;
+  border: 1px solid var(--line);
+  padding: 4px 18px;
+  border-radius: 5px;
+}
+.invitation-summary > div {
+  padding: 14px 0;
+  border-bottom: 1px solid var(--line);
+}
+.invitation-summary > div:last-child {
+  border: none;
+}
+dt {
+  font-size: 12px;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+dd {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 500;
+  overflow-wrap: anywhere;
+}
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
 }

@@ -1,6 +1,6 @@
 # Roadmap CivicFix — hoàn thành từng luồng chức năng
 
-**Cập nhật:** 27/10/2026
+**Cập nhật:** 08/11/2026
 
 **Mục tiêu:** Web responsive portfolio cho quy trình xử lý sự cố kỹ thuật ở khu vực chung của một chung cư. Dữ liệu và tình huống là mô phỏng; chưa có xác nhận nhu cầu từ cư dân hoặc ban quản lý.
 
@@ -55,15 +55,17 @@ Tổng từ M1 đến M9 khoảng **196–327 giờ**, chưa kể dự phòng ch
 
 **Các issue cần giải quyết:**
 
-- [ ] Khởi tạo React/TypeScript, Spring Boot, PostgreSQL, Docker Compose, Flyway và CI build/test tối thiểu.
-- [ ] Tạo users, buildings, apartments, building memberships và resident–apartment links; seed dữ liệu giả gồm căn 03.
-- [ ] Làm luồng quản trị viên mời cư dân, xác minh căn hộ, gửi lại/thu hồi lời mời; dùng email thử nghiệm cục bộ và token một lần có hạn theo [vòng đời tài khoản](ACCOUNT_LIFECYCLE.md).
-- [ ] Làm màn hình kích hoạt, tự đặt mật khẩu, link hết hạn, quên/đặt lại mật khẩu và thu hồi phiên khi đổi mật khẩu hoặc kết thúc membership.
-- [ ] Làm login, logout theo cơ chế đã chọn, `/auth/me`, tài khoản không hoạt động và màn hình phân vai.
-- [ ] Kiểm tra quyền backend theo role + building; test cư dân gọi API quản lý, nhân viên sai chung cư, tài khoản bị vô hiệu hóa.
-- [ ] Hướng dẫn chạy từ clone sạch và dùng secret mẫu; không commit mật khẩu/secrets thật.
+- [x] Khởi tạo React/TypeScript, Spring Boot, PostgreSQL, Docker Compose, Flyway và CI build/test tối thiểu.
+- [x] Tạo users, buildings, apartments, building memberships và resident–apartment links; seed dữ liệu giả gồm căn 03.
+- [x] Làm luồng quản trị viên mời cư dân, xác minh căn hộ, gửi lại/thu hồi lời mời; dùng email thử nghiệm cục bộ và token một lần có hạn theo [vòng đời tài khoản](ACCOUNT_LIFECYCLE.md).
+- [x] Làm màn hình kích hoạt, tự đặt mật khẩu, link hết hạn, quên/đặt lại mật khẩu và thu hồi phiên khi đổi mật khẩu hoặc kết thúc membership.
+- [x] Làm login, logout theo cơ chế đã chọn, `/auth/me`, tài khoản không hoạt động và màn hình phân vai.
+- [x] Kiểm tra quyền backend theo role + building; test cư dân gọi API quản lý, nhân viên sai chung cư, tài khoản bị vô hiệu hóa.
+- [x] Hướng dẫn chạy từ clone sạch và dùng secret mẫu; không commit mật khẩu/secrets thật.
 
 **Xong khi:** Quản trị viên mời tài khoản giả, cư dân kích hoạt qua hộp thư thử nghiệm, đăng nhập và khôi phục được mật khẩu; gửi lại/thu hồi/mời sai và chuyển đi không cấp quyền trái phép; API chặn vượt quyền; migration và CI chạy. Đây là một luồng tích hợp có bảo mật và test ngay tại M2.
+
+**Bằng chứng triển khai:** [M2 implementation](M2_IMPLEMENTATION.md) mô tả API, seed, kiểm thử và giới hạn môi trường demo. Kết quả CI của thay đổi mới cần được xác nhận sau khi push nhánh.
 
 ## 5. M3 — Cư dân tạo, xem phiếu khu vực chung và lưu lịch sử ban đầu
 
@@ -149,8 +151,8 @@ Tổng từ M1 đến M9 khoảng **196–327 giờ**, chưa kể dự phòng ch
 
 ## 12. Việc làm ngay
 
-1. Bắt đầu M2 bằng lát cắt quản trị viên mời → cư dân kích hoạt → đăng nhập → backend xác định căn hộ/quyền, dựa trên [vòng đời tài khoản](ACCOUNT_LIFECYCLE.md), [ma trận quyền](ACCESS_CONTROL.md) và các ca AC-27–AC-40 trong [tiêu chí chấp nhận](ACCEPTANCE_CRITERIA.md).
-2. Trong M2, seed tài khoản giả cho ba vai trò nghiệp vụ và một quản trị viên riêng; kiểm tra quyền từ backend trước khi xây màn hình quản lý phiếu.
+1. Rà soát code M2, chạy các kiểm tra trong [M2 implementation](M2_IMPLEMENTATION.md) và xác nhận ba job CI trên commit mới trước khi merge.
+2. Bắt đầu M3 bằng luồng cư dân căn 03 tạo/xem phiếu khu vực chung; backend lấy người báo và căn hộ hiệu lực, lưu snapshot và lịch sử trong cùng transaction.
 3. Mỗi lần xong một issue, chạy demo chức năng đó và test hồi quy trước khi chọn issue kế tiếp.
 
 ## Tham khảo phương pháp

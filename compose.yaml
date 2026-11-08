@@ -1,3 +1,4 @@
+name: ${CIVICFIX_PROJECT_NAME:-civicfix}
 services:
   db:
     image: postgres:17.11
@@ -6,7 +7,7 @@ services:
       POSTGRES_USER: civicfix
       POSTGRES_PASSWORD: "${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}"
     ports:
-      - "127.0.0.1:5433:5432"
+      - "127.0.0.1:${CIVICFIX_DB_PORT:-5433}:5432"
     volumes:
       - civicfix_pgdata:/var/lib/postgresql/data
     healthcheck:
@@ -14,6 +15,14 @@ services:
       interval: 5s
       timeout: 5s
       retries: 10
+
+  mailpit:
+    image: axllent/mailpit:v1.33.1
+    ports:
+      - "127.0.0.1:${CIVICFIX_SMTP_PORT:-1025}:1025"
+      - "127.0.0.1:${CIVICFIX_MAIL_UI_PORT:-8025}:8025"
+    labels:
+      org.springframework.boot.ignore: "true"
 
 volumes:
   civicfix_pgdata:
