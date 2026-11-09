@@ -123,7 +123,7 @@ test("admin invites, resident activates, resets password, and loses ended access
   ).toBeVisible();
   await login(resident, email);
   await expect(
-    resident.getByRole("heading", { name: "Cư dân", exact: true }),
+    resident.getByRole("heading", { name: "Phiếu của tôi", exact: true }),
   ).toBeVisible();
   await expect(resident.getByText("Căn 04", { exact: true })).toBeVisible();
   expect(
@@ -155,7 +155,7 @@ test("admin invites, resident activates, resets password, and loses ended access
   ).toBeVisible();
   await login(resident, email, newPassword);
   await expect(
-    resident.getByRole("heading", { name: "Cư dân", exact: true }),
+    resident.getByRole("heading", { name: "Phiếu của tôi", exact: true }),
   ).toBeVisible();
   await page
     .getByRole("button", { name: "Tài khoản cư dân", exact: true })
@@ -226,16 +226,21 @@ test("recipient can report wrong apartment and admin sees review task", async ({
 
 test("each staff role opens only its own workspace", async ({ page }) => {
   for (const [email, title] of [
-    ["manager@demo.civicfix.local", "Quản lý phiếu"],
+    ["manager@demo.civicfix.local", "Phiếu chung cư"],
     ["technician@demo.civicfix.local", "Kỹ thuật viên"],
   ]) {
     await login(page, email);
     await expect(
       page.getByRole("heading", { name: title, exact: true }),
     ).toBeVisible();
-    await expect(
-      page.getByText("Tài khoản và quyền truy cập đã sẵn sàng."),
-    ).toBeVisible();
+    if (email.startsWith("manager"))
+      await expect(
+        page.getByRole("link", { name: "Báo sự cố khu vực chung" }),
+      ).toBeVisible();
+    else
+      await expect(
+        page.getByText("Tài khoản và quyền truy cập đã sẵn sàng."),
+      ).toBeVisible();
     await page.getByRole("button", { name: "Đăng xuất" }).click();
   }
 });

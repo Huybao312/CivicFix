@@ -48,6 +48,7 @@ export type Membership = {
   role: string;
 };
 export type Apartment = {
+  link_id?: string;
   id: string;
   unit_number: string;
   floor?: string;

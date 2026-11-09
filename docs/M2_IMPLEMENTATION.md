@@ -120,7 +120,7 @@ Kết quả kiểm chứng local ngày 08/11/2026:
 | Frontend production build | Thành công |
 | Playwright + PostgreSQL + Mailpit | 4/4 kịch bản thành công |
 
-Ba job GitHub Actions đã được cấu hình; cần xem kết quả trên commit sau khi push, không suy ra CI xanh từ kết quả local.
+M2 đã merge qua [PR #12](https://github.com/Huybao312/CivicFix/pull/12), commit `d86b723`; [CI trên main](https://github.com/Huybao312/CivicFix/actions/runs/42492225106) có cả ba job thành công. Issue #3 và milestone M2 đã đóng.
 
 Ảnh từ ứng dụng thực tế: [desktop, mobile và kích hoạt](../design/m2-implemented/README.md).
 

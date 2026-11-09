@@ -56,7 +56,7 @@ jobs:
       - name: Run tests and package backend
         run: ./mvnw --batch-mode verify
   account-e2e:
-    name: Account lifecycle in browser
+    name: Account and issue flows in browser
     runs-on: ubuntu-24.04
     timeout-minutes: 20
     defaults:
@@ -81,7 +81,7 @@ jobs:
       - uses: actions/upload-artifact@v6
         if: always()
         with:
-          name: account-e2e-results
+          name: civicfix-e2e-results
           path: |
             frontend/playwright-report
             frontend/test-results
