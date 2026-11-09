@@ -115,6 +115,7 @@ function App() {
             refresh={refresh}
           />
         ) : path !== "/workspace" &&
+          !path.startsWith("/issues") &&
           me.memberships.some((m) => m.role === "ADMIN") ? (
           <AdminPage me={me} refresh={refresh} />
         ) : (

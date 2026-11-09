@@ -1,6 +1,6 @@
 # Roadmap CivicFix — hoàn thành từng luồng chức năng
 
-**Cập nhật:** 08/11/2026
+**Cập nhật:** 09/11/2026
 
 **Mục tiêu:** Web responsive portfolio cho quy trình xử lý sự cố kỹ thuật ở khu vực chung của một chung cư. Dữ liệu và tình huống là mô phỏng; chưa có xác nhận nhu cầu từ cư dân hoặc ban quản lý.
 
@@ -65,17 +65,19 @@ Tổng từ M1 đến M9 khoảng **196–327 giờ**, chưa kể dự phòng ch
 
 **Xong khi:** Quản trị viên mời tài khoản giả, cư dân kích hoạt qua hộp thư thử nghiệm, đăng nhập và khôi phục được mật khẩu; gửi lại/thu hồi/mời sai và chuyển đi không cấp quyền trái phép; API chặn vượt quyền; migration và CI chạy. Đây là một luồng tích hợp có bảo mật và test ngay tại M2.
 
-**Bằng chứng triển khai:** [M2 implementation](M2_IMPLEMENTATION.md) mô tả API, seed, kiểm thử và giới hạn môi trường demo. Kết quả CI của thay đổi mới cần được xác nhận sau khi push nhánh.
+**Bằng chứng triển khai:** [M2 implementation](M2_IMPLEMENTATION.md) mô tả API, seed, kiểm thử và giới hạn môi trường demo. M2 đã merge qua [PR #12](https://github.com/Huybao312/CivicFix/pull/12); [CI trên main](https://github.com/Huybao312/CivicFix/actions/runs/42492225106) có ba job thành công. Issue #3 và milestone M2 đã đóng.
 
 ## 5. M3 — Cư dân tạo, xem phiếu khu vực chung và lưu lịch sử ban đầu
 
 **Các issue cần giải quyết:**
 
-- [ ] Form báo khu vực chung trên điện thoại: vị trí hỏng, mô tả, ảnh tùy chọn; hướng dẫn trường hợp nguy hiểm hoặc thiết bị riêng trong căn hộ.
-- [ ] `POST /issues`: backend lấy người báo và căn hộ đã xác minh, lưu căn hộ tại thời điểm báo, tạo mã/status/lịch sử trong cùng transaction; chống gửi lặp.
-- [ ] Danh sách/chi tiết phiếu của cư dân, trạng thái rỗng/lỗi; quản lý thấy người báo và căn hộ, cư dân khác không thấy.
-- [ ] Nếu làm ảnh ở milestone này, lưu riêng tư, giới hạn file và test quyền xem; nếu ảnh chưa cần cho demo, ghi quyết định hoãn vào issue và làm cùng luồng ảnh ở M5.
-- [ ] Test IDOR, dữ liệu client tự gán `reported_by`/căn hộ, form sai, sự cố trong căn hộ và transaction thiếu lịch sử.
+- [x] Form báo khu vực chung trên điện thoại: vị trí hỏng, mô tả, ảnh tùy chọn; hướng dẫn trường hợp nguy hiểm hoặc thiết bị riêng trong căn hộ.
+- [x] `POST /issues`: backend lấy người báo và căn hộ đã xác minh, lưu căn hộ tại thời điểm báo, tạo mã/status/lịch sử trong cùng transaction; chống gửi lặp.
+- [x] Danh sách/chi tiết phiếu của cư dân, trạng thái rỗng/lỗi; quản lý thấy người báo và căn hộ, cư dân khác không thấy.
+- [x] Nếu làm ảnh ở milestone này, lưu riêng tư, giới hạn file và test quyền xem; nếu ảnh chưa cần cho demo, ghi quyết định hoãn vào issue và làm cùng luồng ảnh ở M5.
+- [x] Test IDOR, dữ liệu client tự gán `reported_by`/căn hộ, form sai, sự cố trong căn hộ và transaction thiếu lịch sử.
+
+**Bằng chứng local:** [M3 implementation](M3_IMPLEMENTATION.md), 89 backend tests, 5 browser scenarios, frontend lint/build thành công. Ảnh hoãn đến M5; issue M3 giữ mở chờ PR, CI và merge.
 
 **Xong khi:** Cư dân căn 03 gửi báo đèn hành lang, xem được phiếu của mình; quản lý thấy người báo/căn hộ; cư dân khác không đọc được. UI, API, DB, quyền và test cùng hoàn thành.
 
@@ -151,8 +153,8 @@ Tổng từ M1 đến M9 khoảng **196–327 giờ**, chưa kể dự phòng ch
 
 ## 12. Việc làm ngay
 
-1. Rà soát code M2, chạy các kiểm tra trong [M2 implementation](M2_IMPLEMENTATION.md) và xác nhận ba job CI trên commit mới trước khi merge.
-2. Bắt đầu M3 bằng luồng cư dân căn 03 tạo/xem phiếu khu vực chung; backend lấy người báo và căn hộ hiệu lực, lưu snapshot và lịch sử trong cùng transaction.
+1. Rà soát code M3 trong nhánh `feat/m3-resident-issues`, đối chiếu [M3 implementation](M3_IMPLEMENTATION.md) và xác nhận CI trên commit mới trước khi merge.
+2. Sau M3, bắt đầu M4: quản lý tiếp nhận, hỏi bổ sung, từ chối và phân công; giữ lịch sử và kiểm tra cạnh tranh trong từng chức năng.
 3. Mỗi lần xong một issue, chạy demo chức năng đó và test hồi quy trước khi chọn issue kế tiếp.
 
 ## Tham khảo phương pháp

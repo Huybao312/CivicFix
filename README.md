@@ -2,7 +2,7 @@
 
 CivicFix là dự án web responsive hỗ trợ cư dân báo sự cố kỹ thuật tại khu vực chung của chung cư, đồng thời giúp ban quản lý tiếp nhận, phân công và theo dõi quá trình xử lý.
 
-**Trạng thái:** Đã triển khai các chức năng M2 ở môi trường local: đăng nhập/session, tài khoản và căn hộ, mời/kích hoạt cư dân, đặt lại mật khẩu, thu hồi quyền và giao diện theo vai trò. API, migration và luồng trình duyệt có kiểm thử tự động. Chức năng phiếu sự cố thuộc M3 trở đi; nhu cầu người dùng thực tế chưa được xác thực.
+**Trạng thái:** M2 đã merge và CI xanh. Nhánh M3 bổ sung tạo/xem phiếu khu vực chung, snapshot căn hộ, lịch sử ban đầu và kiểm tra quyền đối tượng. Tiếp nhận/phân công thuộc M4; xử lý, ảnh và thông báo kết quả thuộc M5. Nhu cầu người dùng thực tế chưa được xác thực.
 
 ## Bài toán
 
@@ -112,7 +112,9 @@ Mật khẩu khởi tạo chung: `CivicFix demo passphrase 2026!`. Đây là d�
 
 Lời mời có hạn 24 giờ. Gửi lại sau ít nhất 60 giây tạo link mới và vô hiệu hóa link cũ. Báo sai căn hộ dừng kích hoạt và xuất hiện trong danh sách lời mời để admin kiểm tra. Người nhận không tự thay căn hộ.
 
-Các vai trò cư dân/quản lý/kỹ thuật viên có màn hình tài khoản riêng và được kiểm tra quyền ở Backend. Các màn hình này chưa thực hiện nghiệp vụ phiếu M3–M5.
+Cư dân mở **Phiếu của tôi**, chọn **Báo sự cố khu vực chung**, nhập vị trí và mô tả rồi gửi. Phiếu mới có trạng thái “Đã ghi nhận”, căn hộ khi báo và lịch sử đầu tiên. Quản lý thấy phiếu cùng chung cư; cư dân khác không đọc được. Ảnh được hoãn đến M5. Xem [chi tiết M3](docs/M3_IMPLEMENTATION.md).
+
+Kỹ thuật viên có màn hình quyền riêng; việc được giao sẽ xuất hiện khi triển khai phân công ở M4.
 
 ### 5. Dừng ứng dụng
 
@@ -142,7 +144,7 @@ cd backend
 ./mvnw --batch-mode verify
 ```
 
-Test Backend cần Docker đang chạy. Testcontainers tự tạo PostgreSQL riêng và Flyway chạy migration trên database thử nghiệm; không cần `.env` hoặc service `db` của Compose. Bộ test gồm ràng buộc schema và API vòng đời tài khoản: CSRF, session, phạm vi chung cư, invitation/reset token, gửi trùng đồng thời, thu hồi quyền và các ca từ chối. Chưa kiểm tra nghiệp vụ phiếu M3 trở đi.
+Test Backend cần Docker đang chạy. Testcontainers tự tạo PostgreSQL riêng và Flyway chạy migration trên database thử nghiệm; không cần `.env` hoặc service `db` của Compose. Bộ test gồm ràng buộc schema và API vòng đời tài khoản: CSRF, session, phạm vi chung cư, invitation/reset token, gửi trùng đồng thời, thu hồi quyền và các ca từ chối. Nhóm M3 kiểm tra tạo/xem phiếu, snapshot, IDOR, replay và rollback; các thao tác M4 trở đi chưa có.
 
 Kiểm thử trình duyệt với PostgreSQL và Mailpit riêng, chạy từ thư mục `frontend`:
 
@@ -153,12 +155,12 @@ npm run test:e2e
 
 Script tự khởi động môi trường `civicfix-e2e`, Backend và Vite ở các cổng riêng, chạy Playwright rồi xóa riêng container/volume E2E. Cần các cổng `15433`, `11025`, `18025`, `18080`, `4173` còn trống. Không dùng dữ liệu hoặc mật khẩu `.env` local. Nếu đã có Google Chrome, có thể dùng `CIVICFIX_BROWSER_CHANNEL=chrome npm run test:e2e`.
 
-Workflow [CI](.github/workflows/ci.yml) chạy ba job: Frontend lint/build, Backend verify và Account lifecycle in browser khi push hoặc mở pull request. Có thể xem kết quả tại [GitHub Actions](https://github.com/Huybao312/CivicFix/actions).
+Workflow [CI](.github/workflows/ci.yml) chạy ba job: Frontend lint/build, Backend verify và Account and issue flows in browser khi push hoặc mở pull request. Có thể xem kết quả tại [GitHub Actions](https://github.com/Huybao312/CivicFix/actions).
 
 ## Bước tiếp theo
 
-1. Rà soát thay đổi M2 và kết quả CI trên commit mới nhất trước khi merge.
-2. Bắt đầu M3: cư dân tạo/xem phiếu sự cố khu vực chung, Backend gắn danh tính và căn hộ xác minh, kiểm tra quyền từng đối tượng.
+1. Rà soát thay đổi M3 và kết quả CI trên commit mới nhất trước khi merge.
+2. Sau M3, làm M4: quản lý tiếp nhận, hỏi bổ sung, từ chối và phân công; giữ lịch sử và kiểm tra cạnh tranh.
 3. Giữ nguyên yêu cầu kiểm thử, phân quyền và audit trong từng chức năng mới.
 
 Chi tiết API, các quyết định triển khai và bằng chứng M2 nằm trong [M2 implementation](docs/M2_IMPLEMENTATION.md).
