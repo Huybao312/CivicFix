@@ -29,8 +29,8 @@ public class AccountAccess {
             """
             SELECT EXISTS(SELECT 1 FROM building_memberships m JOIN users u ON u.id=m.user_id
              WHERE m.user_id=? AND m.building_id=? AND m.role=? AND m.status='ACTIVE'
-             AND u.status='ACTIVE' AND m.valid_from<=CURRENT_TIMESTAMP
-             AND (m.valid_to IS NULL OR m.valid_to>CURRENT_TIMESTAMP))
+             AND u.status='ACTIVE' AND m.valid_from<=statement_timestamp()
+             AND (m.valid_to IS NULL OR m.valid_to>statement_timestamp()))
             """,
             Boolean.class,
             user,
@@ -48,8 +48,8 @@ public class AccountAccess {
         """
         SELECT m.id, m.building_id, b.name AS building_name, m.role, m.valid_from, m.valid_to
         FROM building_memberships m JOIN buildings b ON b.id=m.building_id
-        WHERE m.user_id=? AND m.status='ACTIVE' AND m.valid_from<=CURRENT_TIMESTAMP
-          AND (m.valid_to IS NULL OR m.valid_to>CURRENT_TIMESTAMP)
+        WHERE m.user_id=? AND m.status='ACTIVE' AND m.valid_from<=statement_timestamp()
+          AND (m.valid_to IS NULL OR m.valid_to>statement_timestamp())
         ORDER BY b.name,m.role
         """,
         user);
@@ -61,11 +61,11 @@ public class AccountAccess {
         SELECT l.id AS link_id,a.id,a.building_id,a.unit_number,a.floor,b.name AS building_name
         FROM resident_apartment_links l JOIN apartments a ON a.id=l.apartment_id
         JOIN buildings b ON b.id=a.building_id
-        WHERE l.user_id=? AND l.status='VERIFIED' AND l.valid_from<=CURRENT_TIMESTAMP
-          AND (l.valid_to IS NULL OR l.valid_to>CURRENT_TIMESTAMP)
+        WHERE l.user_id=? AND l.status='VERIFIED' AND l.valid_from<=statement_timestamp()
+          AND (l.valid_to IS NULL OR l.valid_to>statement_timestamp())
           AND EXISTS(SELECT 1 FROM building_memberships m WHERE m.user_id=l.user_id
             AND m.building_id=a.building_id AND m.role='RESIDENT' AND m.status='ACTIVE'
-            AND m.valid_from<=CURRENT_TIMESTAMP AND (m.valid_to IS NULL OR m.valid_to>CURRENT_TIMESTAMP))
+            AND m.valid_from<=statement_timestamp() AND (m.valid_to IS NULL OR m.valid_to>statement_timestamp()))
         ORDER BY b.name,a.unit_number
         """,
         user);

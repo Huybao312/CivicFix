@@ -1,6 +1,6 @@
 # Roadmap CivicFix — hoàn thành từng luồng chức năng
 
-**Cập nhật:** 09/11/2026
+**Cập nhật** — 14/11/2026
 
 **Mục tiêu:** Web responsive portfolio cho quy trình xử lý sự cố kỹ thuật ở khu vực chung của một chung cư. Dữ liệu và tình huống là mô phỏng; chưa có xác nhận nhu cầu từ cư dân hoặc ban quản lý.
 
@@ -77,7 +77,7 @@ Tổng từ M1 đến M9 khoảng **196–327 giờ**, chưa kể dự phòng ch
 - [x] Nếu làm ảnh ở milestone này, lưu riêng tư, giới hạn file và test quyền xem; nếu ảnh chưa cần cho demo, ghi quyết định hoãn vào issue và làm cùng luồng ảnh ở M5.
 - [x] Test IDOR, dữ liệu client tự gán `reported_by`/căn hộ, form sai, sự cố trong căn hộ và transaction thiếu lịch sử.
 
-**Bằng chứng local:** [M3 implementation](M3_IMPLEMENTATION.md), 89 backend tests, 5 browser scenarios, frontend lint/build thành công. Ảnh hoãn đến M5; issue M3 giữ mở chờ PR, CI và merge.
+**Bằng chứng local:** [M3 implementation](M3_IMPLEMENTATION.md), 89 backend tests, 5 browser scenarios, frontend lint/build thành công. Ảnh hoãn đến M5. M3 đã được merge qua PR #13.
 
 **Xong khi:** Cư dân căn 03 gửi báo đèn hành lang, xem được phiếu của mình; quản lý thấy người báo/căn hộ; cư dân khác không đọc được. UI, API, DB, quyền và test cùng hoàn thành.
 
@@ -85,11 +85,13 @@ Tổng từ M1 đến M9 khoảng **196–327 giờ**, chưa kể dự phòng ch
 
 **Các issue cần giải quyết:**
 
-- [ ] Hàng đợi quản lý có lọc cơ bản và thông tin đủ để quyết định.
-- [ ] Tiếp nhận hoặc từ chối có lý do; yêu cầu bổ sung và cho người báo trả lời.
-- [ ] Đặt ưu tiên và phân công một kỹ thuật viên đang hoạt động; kỹ thuật viên chỉ thấy việc được giao.
-- [ ] Ghi status events và assignments trong transaction; xử lý hai quản lý thao tác cạnh tranh.
-- [ ] Test chuyển trạng thái trái phép, giao cho người sai role/chung cư, lấy việc của kỹ thuật viên khác và lịch sử không nhất quán.
+- [x] Hàng đợi quản lý có lọc cơ bản và thông tin đủ để quyết định.
+- [x] Tiếp nhận hoặc từ chối có lý do; yêu cầu bổ sung và cho người báo trả lời.
+- [x] Đặt ưu tiên và phân công một kỹ thuật viên đang hoạt động; kỹ thuật viên chỉ thấy việc được giao.
+- [x] Ghi status events và assignments trong transaction; xử lý hai quản lý thao tác cạnh tranh.
+- [x] Test chuyển trạng thái trái phép, giao cho người sai role/chung cư, lấy việc của kỹ thuật viên khác và lịch sử không nhất quán.
+
+**Bằng chứng local** — [Triển khai M4](M4_IMPLEMENTATION.md), 117 backend tests, 6 kịch bản trình duyệt và frontend lint/build thành công. Nhánh M4 chờ commit, CI và merge.
 
 **Xong khi:** Từ phiếu ở M3, quản lý có thể ra quyết định và giao việc trên web; kỹ thuật viên thấy đúng phiếu. Ca sai quyền và xung đột đã được kiểm tra.
 

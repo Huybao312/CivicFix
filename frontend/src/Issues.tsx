@@ -1,23 +1,31 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { Me } from "./api";
 import { ApiError, date, request } from "./api";
 import { useRemote } from "./hooks";
 import { Notice } from "./ui";
+import IssueActions from "./IssueActions";
+import type { WorkflowIssue } from "./IssueActions";
+import Notifications from "./Notifications";
 import "./Issues.css";
 
-type Issue = {
+type Issue = WorkflowIssue & {
   id: string;
   code: string;
-  reported_by: string;
-  reporter_name_at_report: string;
-  apartment_label_at_report: string | null;
+  reported_by?: string;
+  reporter_name_at_report?: string;
+  apartment_label_at_report?: string | null;
   location_description: string;
   description: string;
   category: string;
   status: string;
   created_at: string;
 };
-type Event = { id: string; public_message: string; created_at: string };
+type Event = {
+  id: string;
+  public_message: string;
+  created_at: string;
+  actor_name?: string;
+};
 const statusNames: Record<string, string> = {
   SUBMITTED: "Đã ghi nhận",
   NEEDS_INFO: "Cần thêm thông tin",
@@ -28,6 +36,12 @@ const statusNames: Record<string, string> = {
   RESOLVED: "Đã khắc phục",
   CLOSED: "Đã đóng",
   REJECTED: "Không tiếp nhận",
+};
+const priorityNames: Record<string, string> = {
+  LOW: "Thấp",
+  MEDIUM: "Bình thường",
+  HIGH: "Cao",
+  URGENT: "Khẩn",
 };
 const categories: Record<string, string> = {
   OTHER: "Chưa rõ / khác",
@@ -50,64 +64,130 @@ export default function Issues({
   const path = window.location.pathname;
   const base = `/api/buildings/${building}/issues`;
   const href = (id = "") => issueHref(building, role, id);
-  if (path === "/issues/new")
+  if (path === "/issues/new" && role !== "TECHNICIAN")
     return <IssueForm me={me} building={building} base={base} href={href} />;
   const id = path.match(/^\/issues\/([^/]+)$/)?.[1];
-  if (id) return <IssueDetail base={base} id={id} href={href} />;
-  return <IssueList base={base} manager={role === "MANAGER"} href={href} />;
+  if (id)
+    return <IssueDetail base={base} id={id} href={href} building={building} />;
+  return (
+    <>
+      <Notifications building={building} href={href} />
+      <IssueList
+        base={base}
+        manager={role === "MANAGER"}
+        technician={role === "TECHNICIAN"}
+        href={href}
+      />
+    </>
+  );
 }
 function IssueList({
   base,
   manager,
+  technician,
   href,
 }: {
   base: string;
   manager: boolean;
+  technician: boolean;
   href: (id?: string) => string;
 }) {
   const [query, setQuery] = useState(""),
     [search, setSearch] = useState(""),
-    [page, setPage] = useState(0);
+    [page, setPage] = useState(0),
+    [status, setStatus] = useState(""),
+    [priority, setPriority] = useState(""),
+    [appliedStatus, setAppliedStatus] = useState(""),
+    [appliedPriority, setAppliedPriority] = useState("");
   const { data, busy, error, reload } = useRemote<{
     items: Issue[];
     hasMore: boolean;
-  }>(`${base}?page=${page}&size=20&q=${encodeURIComponent(search)}`);
+  }>(
+    `${base}?page=${page}&size=20&q=${encodeURIComponent(search)}&status=${appliedStatus}&priority=${appliedPriority}`,
+  );
   return (
     <section className="issue-workspace" aria-label="Danh sách phiếu">
       <div className="issue-toolbar">
         <p>
           {manager
             ? "Các báo cáo trong chung cư bạn quản lý."
-            : "Các sự cố khu vực chung bạn đã báo."}
+            : technician
+              ? "Các phiếu hiện được giao cho bạn."
+              : "Các sự cố khu vực chung bạn đã báo."}
         </p>
-        <a className="button-link" href={href("new")}>
-          Báo sự cố khu vực chung
-        </a>
+        {!technician && (
+          <a className="button-link" href={href("new")}>
+            Báo sự cố khu vực chung
+          </a>
+        )}
       </div>
-      <form
-        className="issue-search"
-        role="search"
-        onSubmit={(e) => {
-          e.preventDefault();
-          setSearch(query);
-          setPage(0);
-        }}
-      >
-        <label className="field">
-          Tìm phiếu
-          <input
-            type="search"
-            value={query}
-            maxLength={120}
-            onChange={(e) => setQuery(e.target.value)}
-            placeholder="Mã phiếu, vị trí hoặc mô tả"
-          />
-        </label>
-        <button className="secondary">Tìm kiếm</button>
-        <button type="button" className="secondary" onClick={reload}>
-          Làm mới
-        </button>
-      </form>
+      <search>
+        <form
+          className="issue-search"
+          method="get"
+          aria-label="Tìm và lọc phiếu"
+          onSubmit={(e) => {
+            e.preventDefault();
+            setSearch(query);
+            setAppliedStatus(status);
+            setAppliedPriority(priority);
+            setPage(0);
+          }}
+        >
+          <label className="field">
+            Tìm phiếu
+            <input
+              type="search"
+              name="q"
+              autoCapitalize="none"
+              autoCorrect="off"
+              spellCheck={false}
+              value={query}
+              maxLength={120}
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder="Mã phiếu, vị trí hoặc mô tả"
+            />
+          </label>
+          <label className="field issue-filter">
+            Trạng thái
+            <select
+              name="status"
+              aria-label="Trạng thái"
+              value={status}
+              onChange={(e) => setStatus(e.target.value)}
+            >
+              <option value="">Tất cả</option>
+              {Object.entries(statusNames).map(([value, label]) => (
+                <option key={value} value={value}>
+                  {label}
+                </option>
+              ))}
+            </select>
+          </label>
+          <label className="field issue-filter">
+            Ưu tiên
+            <select
+              name="priority"
+              aria-label="Ưu tiên"
+              value={priority}
+              onChange={(e) => setPriority(e.target.value)}
+            >
+              <option value="">Tất cả</option>
+              {Object.entries(priorityNames).map(([value, label]) => (
+                <option key={value} value={value}>
+                  {label}
+                </option>
+              ))}
+            </select>
+          </label>
+          <button type="submit" className="secondary">
+            Tìm kiếm
+          </button>
+          <button type="button" className="secondary" onClick={reload}>
+            Làm mới
+          </button>
+        </form>
+      </search>
       {busy ? (
         <Notice>Đang tải danh sách phiếu…</Notice>
       ) : error ? (
@@ -123,7 +203,7 @@ function IssueList({
                 <tr>
                   <th>Phiếu / vị trí</th>
                   {manager && <th>Người báo / căn hộ khi báo</th>}
-                  <th>Trạng thái</th>
+                  <th>Trạng thái / ưu tiên</th>
                   <th>Ngày ghi nhận</th>
                 </tr>
               </thead>
@@ -150,6 +230,11 @@ function IssueList({
                     <td>
                       <span className="status">
                         {statusNames[i.status] || i.status}
+                      </span>
+                      <span
+                        className={`subtext priority-${i.priority?.toLowerCase()}`}
+                      >
+                        {priorityNames[i.priority] || "Bình thường"}
                       </span>
                     </td>
                     <td>{date(i.created_at)}</td>
@@ -179,12 +264,18 @@ function IssueList({
       ) : (
         <div className="issue-empty">
           <h2>
-            {search ? "Không tìm thấy phiếu phù hợp" : "Chưa có phiếu nào"}
+            {search || appliedStatus || appliedPriority
+              ? "Không tìm thấy phiếu phù hợp"
+              : technician
+                ? "Chưa có việc được giao"
+                : "Chưa có phiếu nào"}
           </h2>
           <p>
-            {search
-              ? "Thử mã phiếu hoặc vị trí khác."
-              : "Khi có sự cố ở khu vực chung, bạn có thể gửi báo cáo tại đây."}
+            {search || appliedStatus || appliedPriority
+              ? "Thử từ khóa hoặc bộ lọc khác."
+              : technician
+                ? "Phiếu sẽ xuất hiện khi quản lý phân công cho bạn."
+                : "Khi có sự cố ở khu vực chung, bạn có thể gửi báo cáo tại đây."}
           </p>
         </div>
       )}
@@ -270,6 +361,7 @@ function IssueForm({
         }}
       >
         <fieldset disabled={busy || uncertain}>
+          <legend className="visually-hidden">Thông tin báo cáo</legend>
           <label className="field">
             Phạm vi sự cố
             <select value={scope} onChange={(e) => setScope(e.target.value)}>
@@ -377,13 +469,28 @@ function IssueDetail({
   base,
   id,
   href,
+  building,
 }: {
   base: string;
   id: string;
   href: (id?: string) => string;
+  building: string;
 }) {
+  const [updated, setUpdated] = useState<Issue | null>(null);
+  const heading = useRef<HTMLHeadingElement>(null);
+  const [notificationError, setNotificationError] = useState("");
   const issue = useRemote<Issue>(`${base}/${encodeURIComponent(id)}`),
     history = useRemote<Event[]>(`${base}/${encodeURIComponent(id)}/events`);
+  const notification = new URLSearchParams(window.location.search).get(
+    "notification",
+  );
+  useEffect(() => {
+    if (!issue.data || !notification) return;
+    void request(
+      `/api/buildings/${building}/notifications/${encodeURIComponent(notification)}/read`,
+      { method: "POST" },
+    ).catch((e: Error) => setNotificationError(e.message));
+  }, [issue.data, notification, building]);
   if (issue.busy) return <Notice>Đang tải phiếu…</Notice>;
   if (issue.error)
     return (
@@ -393,20 +500,34 @@ function IssueDetail({
         <button onClick={issue.reload}>Thử lại</button>
       </>
     );
-  const i = issue.data!;
+  const i =
+    updated && updated.version >= issue.data!.version ? updated : issue.data!;
+  function applied(next: WorkflowIssue) {
+    setUpdated(next as Issue);
+    history.reload();
+  }
+  async function refresh() {
+    const next = await request<Issue>(`${base}/${encodeURIComponent(id)}`);
+    applied(next);
+    return next;
+  }
   return (
     <article className="issue-detail">
       <a className="back-link" href={href()}>
         ← Danh sách phiếu
       </a>
-      {new URLSearchParams(window.location.search).has("submitted") && (
-        <Notice>
-          Báo cáo {i.code} đã được ghi nhận. Quản lý sẽ xem xét trước khi tiếp
-          nhận xử lý.
-        </Notice>
-      )}
+      {notificationError && <Notice error>{notificationError}</Notice>}
+      {new URLSearchParams(window.location.search).has("submitted") &&
+        i.status === "SUBMITTED" && (
+          <Notice>
+            Báo cáo {i.code} đã được ghi nhận. Quản lý sẽ xem xét trước khi tiếp
+            nhận xử lý.
+          </Notice>
+        )}
       <div className="issue-detail-heading">
-        <h1>{i.code}</h1>
+        <h1 ref={heading} tabIndex={-1}>
+          {i.code}
+        </h1>
         <span className="status">{statusNames[i.status] || i.status}</span>
       </div>
       <dl className="issue-facts">
@@ -414,18 +535,22 @@ function IssueDetail({
           <dt>Vị trí xảy ra sự cố</dt>
           <dd>{i.location_description}</dd>
         </div>
-        <div>
-          <dt>Người báo</dt>
-          <dd>{i.reporter_name_at_report}</dd>
-        </div>
-        <div>
-          <dt>Căn hộ khi báo</dt>
-          <dd>
-            {i.apartment_label_at_report
-              ? `Căn ${i.apartment_label_at_report} · đã xác minh khi báo`
-              : "Căn hộ chưa xác minh khi báo"}
-          </dd>
-        </div>
+        {i.reporter_name_at_report !== undefined && (
+          <>
+            <div>
+              <dt>Người báo</dt>
+              <dd>{i.reporter_name_at_report}</dd>
+            </div>
+            <div>
+              <dt>Căn hộ khi báo</dt>
+              <dd>
+                {i.apartment_label_at_report
+                  ? `Căn ${i.apartment_label_at_report} · đã xác minh khi báo`
+                  : "Căn hộ chưa xác minh khi báo"}
+              </dd>
+            </div>
+          </>
+        )}
         <div>
           <dt>Ngày ghi nhận</dt>
           <dd>{date(i.created_at)}</dd>
@@ -434,7 +559,26 @@ function IssueDetail({
           <dt>Loại sự cố</dt>
           <dd>{categories[i.category] || i.category}</dd>
         </div>
+        <div>
+          <dt>Ưu tiên</dt>
+          <dd>{priorityNames[i.priority] || "Bình thường"}</dd>
+        </div>
+        {i.assignment && (
+          <div>
+            <dt>Kỹ thuật viên phụ trách</dt>
+            <dd>{i.assignment.technician_name}</dd>
+          </div>
+        )}
       </dl>
+      <IssueActions
+        issue={i}
+        base={base}
+        updated={(next) => {
+          applied(next);
+          requestAnimationFrame(() => heading.current?.focus());
+        }}
+        refresh={refresh}
+      />
       <section className="issue-description">
         <h3>Mô tả sự cố</h3>
         <p>{i.description}</p>
@@ -453,6 +597,9 @@ function IssueDetail({
             {history.data?.map((e) => (
               <li key={e.id}>
                 <time>{date(e.created_at)}</time>
+                {e.actor_name && (
+                  <span className="history-actor"> · {e.actor_name}</span>
+                )}
                 <p>{e.public_message}</p>
               </li>
             ))}

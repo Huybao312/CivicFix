@@ -1,8 +1,6 @@
-import { useRemote } from "./hooks";
 import { useState } from "react";
 import type { Me } from "./api";
 import { roleNames } from "./api";
-import { Notice } from "./ui";
 import Issues from "./Issues";
 
 export default function Workspace({ me }: { me: Me }) {
@@ -33,8 +31,7 @@ export default function Workspace({ me }: { me: Me }) {
     );
   return (
     <main className="workspace">
-      {window.location.pathname.startsWith("/issues/") &&
-      m.role !== "TECHNICIAN" ? (
+      {window.location.pathname.startsWith("/issues/") ? (
         <p className="section-label">{m.building_name}</p>
       ) : (
         <div className="page-heading">
@@ -45,7 +42,7 @@ export default function Workspace({ me }: { me: Me }) {
                 ? "Phiếu của tôi"
                 : m.role === "MANAGER"
                   ? "Phiếu chung cư"
-                  : roleNames[m.role]}
+                  : "Việc của tôi"}
             </h1>
             <p>Xin chào {me.display_name}.</p>
             {m.role === "RESIDENT" && (
@@ -79,47 +76,12 @@ export default function Workspace({ me }: { me: Me }) {
           )}
         </div>
       )}
-      {m.role === "RESIDENT" || m.role === "MANAGER" ? (
-        <Issues
-          key={`${m.id}:${window.location.pathname}`}
-          me={me}
-          building={m.building_id}
-          role={m.role}
-        />
-      ) : (
-        <WorkspaceStatus building={m.building_id} role={m.role} />
-      )}
+      <Issues
+        key={`${m.id}:${window.location.pathname}`}
+        me={me}
+        building={m.building_id}
+        role={m.role}
+      />
     </main>
-  );
-}
-function WorkspaceStatus({
-  building,
-  role,
-}: {
-  building: string;
-  role: string;
-}) {
-  const { error, busy, reload } = useRemote<{ message: string }>(
-    `/api/buildings/${building}/workspace/${role}`,
-  );
-  return (
-    <section className="account-section">
-      <h2>Tài khoản sẵn sàng</h2>
-      {busy ? (
-        <Notice>Đang kiểm tra quyền…</Notice>
-      ) : error ? (
-        <>
-          <Notice error>{error}</Notice>
-          <button className="secondary" onClick={reload}>
-            Kiểm tra lại
-          </button>
-        </>
-      ) : (
-        <p>
-          Tài khoản và quyền truy cập đã sẵn sàng. Chức năng xem việc được giao
-          chưa có trong bản thử nghiệm này.
-        </p>
-      )}
-    </section>
   );
 }

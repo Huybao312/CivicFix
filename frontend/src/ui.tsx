@@ -56,21 +56,42 @@ export function Dialog({
   title,
   close,
   children,
+  busy = false,
 }: {
   title: string;
   close: () => void;
   children: ReactNode;
+  busy?: boolean;
 }) {
   const ref = useRef<HTMLDialogElement>(null);
   const headingId = useId();
   useEffect(() => {
-    ref.current?.showModal();
+    const dialog = ref.current;
+    dialog?.showModal();
+    return () => {
+      if (dialog?.open) dialog.close();
+    };
   }, []);
   return (
-    <dialog ref={ref} onCancel={close} aria-labelledby={headingId}>
+    <dialog
+      ref={ref}
+      onClose={() => {
+        if (!ref.current?.open) close();
+      }}
+      onCancel={(event) => {
+        if (busy) event.preventDefault();
+      }}
+      aria-labelledby={headingId}
+    >
       <header className="dialog-heading">
         <h2 id={headingId}>{title}</h2>
-        <button className="plain" onClick={close} aria-label="Đóng hộp thoại">
+        <button
+          type="button"
+          className="plain"
+          disabled={busy}
+          onClick={() => ref.current?.close()}
+          aria-label="Đóng hộp thoại"
+        >
           Đóng
         </button>
       </header>
