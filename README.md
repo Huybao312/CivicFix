@@ -2,7 +2,7 @@
 
 CivicFix là dự án web responsive hỗ trợ cư dân báo sự cố kỹ thuật tại khu vực chung của chung cư, đồng thời giúp ban quản lý tiếp nhận, phân công và theo dõi quá trình xử lý.
 
-**Trạng thái:** M2 đã merge và CI xanh. Nhánh M3 bổ sung tạo/xem phiếu khu vực chung, snapshot căn hộ, lịch sử ban đầu và kiểm tra quyền đối tượng. Tiếp nhận/phân công thuộc M4; xử lý, ảnh và thông báo kết quả thuộc M5. Nhu cầu người dùng thực tế chưa được xác thực.
+**Trạng thái** — M2 và M3 đã merge. Nhánh M4 bổ sung tiếp nhận, hỏi–đáp, từ chối/khôi phục, ưu tiên, phân công và thông báo trong ứng dụng. Kỹ thuật viên có trang Việc của tôi. Chi tiết triển khai và cách thử nằm trong [tài liệu M4](docs/M4_IMPLEMENTATION.md).
 
 ## Bài toán
 
@@ -114,7 +114,7 @@ Lời mời có hạn 24 giờ. Gửi lại sau ít nhất 60 giây tạo link m
 
 Cư dân mở **Phiếu của tôi**, chọn **Báo sự cố khu vực chung**, nhập vị trí và mô tả rồi gửi. Phiếu mới có trạng thái “Đã ghi nhận”, căn hộ khi báo và lịch sử đầu tiên. Quản lý thấy phiếu cùng chung cư; cư dân khác không đọc được. Ảnh được hoãn đến M5. Xem [chi tiết M3](docs/M3_IMPLEMENTATION.md).
 
-Kỹ thuật viên có màn hình quyền riêng; việc được giao sẽ xuất hiện khi triển khai phân công ở M4.
+Để thử M4, đăng nhập quản lý, mở phiếu rồi chọn **Yêu cầu bổ sung**. Cư dân mở **Thông báo**, vào phiếu và trả lời câu hỏi. Quản lý có thể tiếp nhận, từ chối/khôi phục, đổi ưu tiên và phân công. Sau phân công, đăng nhập kỹ thuật viên để mở **Việc của tôi**. Các lý do công khai hiển thị trong lịch sử người báo, lý do đổi ưu tiên được quản lý đọc trong lịch sử nội bộ.
 
 ### 5. Dừng ứng dụng
 
@@ -144,7 +144,7 @@ cd backend
 ./mvnw --batch-mode verify
 ```
 
-Test Backend cần Docker đang chạy. Testcontainers tự tạo PostgreSQL riêng và Flyway chạy migration trên database thử nghiệm; không cần `.env` hoặc service `db` của Compose. Bộ test gồm ràng buộc schema và API vòng đời tài khoản: CSRF, session, phạm vi chung cư, invitation/reset token, gửi trùng đồng thời, thu hồi quyền và các ca từ chối. Nhóm M3 kiểm tra tạo/xem phiếu, snapshot, IDOR, replay và rollback; các thao tác M4 trở đi chưa có.
+Test Backend cần Docker đang chạy. Testcontainers tự tạo PostgreSQL riêng và Flyway chạy migration trên database thử nghiệm; không cần `.env` hoặc service `db` của Compose. Bộ test gồm ràng buộc schema và API vòng đời tài khoản: CSRF, session, phạm vi chung cư, invitation/reset token, gửi trùng đồng thời, thu hồi quyền và các ca từ chối. Nhóm M3 kiểm tra tạo/xem phiếu, snapshot, IDOR, replay và rollback; M4 kiểm tra quyết định điều phối, phân công đồng thời, thông báo và quyền kỹ thuật viên.
 
 Kiểm thử trình duyệt với PostgreSQL và Mailpit riêng, chạy từ thư mục `frontend`:
 
@@ -159,8 +159,8 @@ Workflow [CI](.github/workflows/ci.yml) chạy ba job: Frontend lint/build, Back
 
 ## Bước tiếp theo
 
-1. Rà soát thay đổi M3 và kết quả CI trên commit mới nhất trước khi merge.
-2. Sau M3, làm M4: quản lý tiếp nhận, hỏi bổ sung, từ chối và phân công; giữ lịch sử và kiểm tra cạnh tranh.
+1. Rà soát nhánh M4 và kết quả CI trên commit mới trước khi merge.
+2. Tiếp theo triển khai M5 với cập nhật công việc kỹ thuật, xác nhận kết quả, ảnh riêng tư và phản hồi của cư dân.
 3. Giữ nguyên yêu cầu kiểm thử, phân quyền và audit trong từng chức năng mới.
 
 Chi tiết API, các quyết định triển khai và bằng chứng M2 nằm trong [M2 implementation](docs/M2_IMPLEMENTATION.md).

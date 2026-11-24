@@ -378,7 +378,13 @@ class IssuesTests {
     for (UUID user : List.of(admin, tech)) {
       var s = login(user);
       send(s, UUID.randomUUID(), payload()).andExpect(status().isForbidden());
-      mvc.perform(get(base()).session(s)).andExpect(status().isForbidden());
+      if (user.equals(tech)) {
+        mvc.perform(get(base()).session(s))
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$.items.length()").value(0));
+      } else {
+        mvc.perform(get(base()).session(s)).andExpect(status().isForbidden());
+      }
       mvc.perform(get(base() + "/" + i.get("id")).session(s)).andExpect(status().isNotFound());
       mvc.perform(get(base() + "/" + i.get("id") + "/events").session(s))
           .andExpect(status().isNotFound());

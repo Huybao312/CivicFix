@@ -47,8 +47,10 @@ public class IssueController {
       Authentication auth,
       @RequestParam(defaultValue = "0") int page,
       @RequestParam(defaultValue = "20") int size,
-      @RequestParam(defaultValue = "") String q) {
-    return issues.list(access.user(auth), building, page, size, q);
+      @RequestParam(defaultValue = "") String q,
+      @RequestParam(defaultValue = "") String status,
+      @RequestParam(defaultValue = "") String priority) {
+    return issues.list(access.user(auth), building, page, size, q, status, priority);
   }
 
   @GetMapping("/{id}")

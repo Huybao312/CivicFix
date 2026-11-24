@@ -227,7 +227,7 @@ test("recipient can report wrong apartment and admin sees review task", async ({
 test("each staff role opens only its own workspace", async ({ page }) => {
   for (const [email, title] of [
     ["manager@demo.civicfix.local", "Phiếu chung cư"],
-    ["technician@demo.civicfix.local", "Kỹ thuật viên"],
+    ["technician@demo.civicfix.local", "Việc của tôi"],
   ]) {
     await login(page, email);
     await expect(
@@ -239,7 +239,7 @@ test("each staff role opens only its own workspace", async ({ page }) => {
       ).toBeVisible();
     else
       await expect(
-        page.getByText("Tài khoản và quyền truy cập đã sẵn sàng."),
+        page.getByText("Các phiếu hiện được giao cho bạn."),
       ).toBeVisible();
     await page.getByRole("button", { name: "Đăng xuất" }).click();
   }
